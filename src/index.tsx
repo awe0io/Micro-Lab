@@ -305,11 +305,11 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: MAGICAL BUTTONS ═══════════ */}
-      <section id="buttons" class="relative py-28 sm:py-36 px-6">
+      <section id="buttons" class="relative py-20 sm:py-24 px-6">
         {/* Section decoration */}
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#007AFF]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-16 sm:mb-20">
+          <div class="section-header mb-12 sm:mb-16">
             <div class="flex items-center gap-3 mb-4">
               <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#007AFF] to-transparent" />
               <span class="text-xs font-mono tracking-widest uppercase text-[#007AFF]">01 / Buttons</span>
@@ -386,10 +386,10 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: SMOOTH CARDS ═══════════ */}
-      <section id="cards" class="relative py-28 sm:py-36 px-6">
+      <section id="cards" class="relative py-20 sm:py-24 px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#AF52DE]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-16 sm:mb-20">
+          <div class="section-header mb-12 sm:mb-16">
             <div class="flex items-center gap-3 mb-4">
               <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#AF52DE] to-transparent" />
               <span class="text-xs font-mono tracking-widest uppercase text-[#AF52DE]">02 / Cards</span>
@@ -506,10 +506,10 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: INPUT FEEDBACK ═══════════ */}
-      <section id="inputs" class="relative py-28 sm:py-36 px-6">
+      <section id="inputs" class="relative py-20 sm:py-24 px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#34C759]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-16 sm:mb-20">
+          <div class="section-header mb-12 sm:mb-16">
             <div class="flex items-center gap-3 mb-4">
               <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#34C759] to-transparent" />
               <span class="text-xs font-mono tracking-widest uppercase text-[#34C759]">03 / Inputs</span>
@@ -576,10 +576,10 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: MICRO LOADERS ═══════════ */}
-      <section id="loaders" class="relative py-28 sm:py-36 px-6">
+      <section id="loaders" class="relative py-20 sm:py-24 px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#FF9500]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-16 sm:mb-20">
+          <div class="section-header mb-12 sm:mb-16">
             <div class="flex items-center gap-3 mb-4">
               <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#FF9500] to-transparent" />
               <span class="text-xs font-mono tracking-widest uppercase text-[#FF9500]">04 / Loaders</span>

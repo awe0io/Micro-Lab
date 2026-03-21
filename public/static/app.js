@@ -412,18 +412,66 @@
     }
   }
 
-  // Click handler: immediately jump indicator to target, lock out observer
+  // Click handler: two-phase stretch animation — old→stretch→settle on target
   function initNavPillClicks() {
     const pills = document.querySelectorAll('.nav-pill-track .nav-pill');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
     function handleNavClick(e) {
       const section = e.currentTarget.dataset.section;
-      if (!section) return;
+      if (!section || section === activeSection) return;
 
-      // Immediately update indicator — no waiting for scroll
+      const indicator = document.getElementById('nav-indicator');
+      const track = document.querySelector('.nav-pill-track');
+      if (!indicator || !track) return;
+
+      // Find current and target pills
+      const allPills = Array.from(document.querySelectorAll('.nav-pill-track .nav-pill'));
+      const currentPill = allPills.find(p => p.dataset.section === activeSection);
+      const targetPill = allPills.find(p => p.dataset.section === section);
+      if (!targetPill) return;
+
+      const trackRect = track.getBoundingClientRect();
+      const targetRect = targetPill.getBoundingClientRect();
+
+      if (currentPill) {
+        const currentRect = currentPill.getBoundingClientRect();
+
+        // Phase 1: Stretch — indicator expands to cover both old and new pill
+        const stretchLeft = Math.min(currentRect.left, targetRect.left) - trackRect.left;
+        const stretchRight = Math.max(currentRect.right, targetRect.right) - trackRect.left;
+        indicator.classList.remove('settling');
+        indicator.classList.add('stretching');
+        indicator.style.left = stretchLeft + 'px';
+        indicator.style.width = (stretchRight - stretchLeft) + 'px';
+
+        // Phase 2: Settle — contract to target pill with bounce easing
+        setTimeout(() => {
+          indicator.classList.remove('stretching');
+          indicator.classList.add('settling');
+          indicator.style.left = (targetRect.left - trackRect.left) + 'px';
+          indicator.style.width = targetRect.width + 'px';
+        }, 200);
+
+        // Cleanup classes
+        setTimeout(() => {
+          indicator.classList.remove('settling');
+        }, 550);
+      } else {
+        // No current pill (first click) — just slide directly
+        indicator.style.left = (targetRect.left - trackRect.left) + 'px';
+        indicator.style.width = targetRect.width + 'px';
+        indicator.style.opacity = '1';
+      }
+
+      // Update active state immediately
       activeSection = section;
-      updateNavIndicator();
+      allPills.forEach(pill => {
+        pill.classList.toggle('active', pill.dataset.section === section);
+      });
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.section === section);
+      });
 
       // Lock out IntersectionObserver during smooth scroll
       isNavigating = true;
