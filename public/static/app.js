@@ -1,31 +1,197 @@
 /* ══════════════════════════════════════════════════
    MICRO-INTERACTION LAB — Core Interaction Engine
-   60fps · Apple-style Easing · Premium Feel
+   60fps · Apple-style Easing · i18n · Premium Feel
    ══════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  // ── Easing Presets ──
-  const EASE = {
-    spring: 'cubic-bezier(0.23, 1, 0.32, 1)',
-    outExpo: 'cubic-bezier(0.16, 1, 0.3, 1)',
-    outQuart: 'cubic-bezier(0.25, 1, 0.5, 1)',
+  // ═══════════════════════════════════
+  // i18n DICTIONARY
+  // ═══════════════════════════════════
+  const i18n = {
+    zh: {
+      'nav.buttons': '按钮',
+      'nav.cards': '卡片',
+      'nav.inputs': '输入',
+      'nav.loaders': '加载',
+      'hero.badge': '前端微交互实验室',
+      'hero.desc': '探索动画边界 · 提升交互愉悦感',
+      'hero.cta': '探索组件',
+      'hero.scroll': '向下滚动',
+      'buttons.title': '魔法按钮',
+      'buttons.desc': '流光边框 · 物理按压 · 光影追随 — 每一次点击都是一次视觉享受',
+      'btn.getStarted': '开始使用',
+      'btn.aurora.desc': '渐变流光 + 光泽扫过效果',
+      'btn.subscribe': '订阅',
+      'btn.neon.desc': '旋转彩虹边框 + 按压反馈',
+      'btn.explore': '探索',
+      'btn.magnetic.desc': '鼠标靠近时的磁力吸附效果',
+      'btn.clickMe': '点击我',
+      'btn.ripple.desc': 'Material Design 水波纹扩散',
+      'btn.submit': '提交',
+      'btn.morph.desc': '提交 → 加载中 → 完成 变形动画',
+      'btn.hoverMe': '悬浮我',
+      'btn.spotlight.desc': '鼠标追踪的聚光灯光效',
+      'cards.title': '丝滑卡片',
+      'cards.desc': '3D 视差位移 · 光影追踪 · 深度感知 — 让平面设计拥有空间纵深感',
+      'card.tilt.title': '3D 倾斜效果',
+      'card.tilt.desc': '鼠标悬浮时卡片随鼠标位置产生倾斜，内部元素层级不同产生视差位移。',
+      'card.learnMore': '了解更多',
+      'card.glow.title': '发光边框',
+      'card.glow.desc': '悬浮时边框渐变发光，内部背景保持纯净，形成精致的光晕镶边效果。',
+      'card.glass.title': '毛玻璃拟态',
+      'card.glass.desc': '毛玻璃拟态设计，背景虚化与透明叠加，呈现苹果风格的精致层次。',
+      'card.glass.tag1': '模糊',
+      'card.glass.tag2': '层叠',
+      'card.glass.tag3': '纵深',
+      'card.reveal.title': '揭示效果',
+      'card.reveal.desc': '鼠标移入时从底部滑入隐藏内容，提供渐进式信息展示体验。',
+      'card.reveal.hidden': '这是一个完美的渐进式内容展示模式，用户只需悬浮即可获取更多信息。',
+      'card.viewDetails': '查看详情',
+      'card.stacked.title': '层叠卡片',
+      'card.stacked.desc': '多层卡片堆叠效果，悬浮时层层展开，展示空间深度与层次结构。',
+      'card.spotlight.title': '聚光灯揭示',
+      'card.spotlight.desc': '鼠标追踪的柔和聚光灯效果，为卡片增添精致的交互光感。',
+      'inputs.title': '输入反馈',
+      'inputs.desc': '灵感来自 Linear / Vercel — 每一次输入都伴随着精准的视觉反馈',
+      'input.emailPlaceholder': '请输入邮箱...',
+      'input.focusGlow.desc': '聚焦时外发光渐变边框',
+      'input.username': '用户名',
+      'input.floatLabel.desc': '输入时标签上浮动画',
+      'input.validation.desc': '实时邮箱格式验证反馈',
+      'input.searchPlaceholder': '搜索组件...',
+      'input.search.desc': 'Vercel 风格搜索 + 快捷键提示',
+      'loaders.title': '微加载动画',
+      'loaders.desc': '不只是等待 · 更是视觉享受 — 让加载过程变成缓解焦虑的趣味动画',
+      'footer.tagline': '以极致的细节打造每一个交互',
+      'validation.valid': '邮箱格式正确',
+      'validation.invalid': '请输入有效的邮箱地址',
+    },
+    en: {
+      'nav.buttons': 'Buttons',
+      'nav.cards': 'Cards',
+      'nav.inputs': 'Inputs',
+      'nav.loaders': 'Loaders',
+      'hero.badge': 'Frontend Micro-interaction Lab',
+      'hero.desc': 'Pushing Animation Boundaries · Enhancing Interaction Delight',
+      'hero.cta': 'Explore Components',
+      'hero.scroll': 'Scroll Down',
+      'buttons.title': 'Magical Buttons',
+      'buttons.desc': 'Flowing Borders · Physical Press · Light Tracking — Every click is a visual treat',
+      'btn.getStarted': 'Get Started',
+      'btn.aurora.desc': 'Gradient shimmer + gloss sweep effect',
+      'btn.subscribe': 'Subscribe',
+      'btn.neon.desc': 'Rotating rainbow border + press feedback',
+      'btn.explore': 'Explore',
+      'btn.magnetic.desc': 'Magnetic pull when cursor approaches',
+      'btn.clickMe': 'Click Me',
+      'btn.ripple.desc': 'Material Design ripple expansion',
+      'btn.submit': 'Submit',
+      'btn.morph.desc': 'Submit → Loading → Success morphing',
+      'btn.hoverMe': 'Hover Me',
+      'btn.spotlight.desc': 'Cursor-tracking spotlight effect',
+      'cards.title': 'Smooth Cards',
+      'cards.desc': '3D Parallax · Light Tracking · Depth Perception — Adding spatial depth to flat design',
+      'card.tilt.title': '3D Tilt Effect',
+      'card.tilt.desc': 'Card tilts with cursor position on hover, inner elements parallax at different depths.',
+      'card.learnMore': 'Learn more',
+      'card.glow.title': 'Glow Border',
+      'card.glow.desc': 'Gradient glow border on hover, clean interior creates an elegant halo frame.',
+      'card.glass.title': 'Glassmorphism',
+      'card.glass.desc': 'Frosted glass design with blur overlay, delivering Apple-style refined layering.',
+      'card.glass.tag1': 'Blur',
+      'card.glass.tag2': 'Layer',
+      'card.glass.tag3': 'Depth',
+      'card.reveal.title': 'Reveal Effect',
+      'card.reveal.desc': 'Hidden content slides in from bottom on hover for progressive disclosure.',
+      'card.reveal.hidden': 'A perfect progressive disclosure pattern — users discover more just by hovering.',
+      'card.viewDetails': 'View Details',
+      'card.stacked.title': 'Stacked Layers',
+      'card.stacked.desc': 'Multi-layer stacking unfolds on hover, showcasing spatial depth and hierarchy.',
+      'card.spotlight.title': 'Spotlight Reveal',
+      'card.spotlight.desc': 'Soft cursor-tracking spotlight adds refined interactive light to cards.',
+      'inputs.title': 'Input Feedback',
+      'inputs.desc': 'Inspired by Linear / Vercel — Every keystroke comes with precise visual feedback',
+      'input.emailPlaceholder': 'Enter your email...',
+      'input.focusGlow.desc': 'Gradient glow border on focus',
+      'input.username': 'Username',
+      'input.floatLabel.desc': 'Label float animation on input',
+      'input.validation.desc': 'Real-time email format validation',
+      'input.searchPlaceholder': 'Search components...',
+      'input.search.desc': 'Vercel-style search + keyboard shortcut hint',
+      'loaders.title': 'Micro Loaders',
+      'loaders.desc': 'Not just waiting · A visual delight — Turn loading into anxiety-relieving animations',
+      'footer.tagline': 'Crafted with obsessive attention to detail',
+      'validation.valid': 'Valid email address',
+      'validation.invalid': 'Please enter a valid email',
+    }
   };
 
+  let currentLang = localStorage.getItem('micro-lab-lang') || 'zh';
+
+  function applyI18n(lang, animate) {
+    const dict = i18n[lang];
+    if (!dict) return;
+
+    const els = document.querySelectorAll('[data-i18n]');
+    const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+
+    if (animate) {
+      // Phase 1: fade out
+      els.forEach(el => el.classList.add('i18n-switching'));
+      setTimeout(() => {
+        els.forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key]) el.textContent = dict[key];
+          el.classList.remove('i18n-switching');
+        });
+        placeholders.forEach(el => {
+          const key = el.getAttribute('data-i18n-placeholder');
+          if (dict[key]) el.placeholder = dict[key];
+        });
+      }, 150);
+    } else {
+      els.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+      placeholders.forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (dict[key]) el.placeholder = dict[key];
+      });
+    }
+  }
+
+  function initI18n() {
+    const btn = document.getElementById('lang-toggle');
+    const label = document.getElementById('lang-label');
+    if (!btn) return;
+
+    // Apply stored language
+    applyI18n(currentLang, false);
+    label.textContent = currentLang === 'zh' ? 'EN' : '中';
+
+    btn.addEventListener('click', () => {
+      currentLang = currentLang === 'zh' ? 'en' : 'zh';
+      localStorage.setItem('micro-lab-lang', currentLang);
+      label.textContent = currentLang === 'zh' ? 'EN' : '中';
+      applyI18n(currentLang, true);
+    });
+  }
+
   // ═══════════════════════════════════
-  // 1. THEME TOGGLE
+  // THEME TOGGLE
   // ═══════════════════════════════════
   function initTheme() {
     const toggle = document.getElementById('theme-toggle');
     if (!toggle) return;
 
-    // Check system preference or stored
     const stored = localStorage.getItem('micro-lab-theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = stored ? stored === 'dark' : prefersDark;
-
-    if (isDark) document.documentElement.classList.add('dark');
+    if (stored ? stored === 'dark' : prefersDark) {
+      document.documentElement.classList.add('dark');
+    }
 
     toggle.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
@@ -35,53 +201,73 @@
   }
 
   // ═══════════════════════════════════
-  // 2. INTERSECTION OBSERVER (Scroll Reveal)
+  // SCROLL REVEAL
   // ═══════════════════════════════════
   function initScrollReveal() {
     const targets = document.querySelectorAll(
       '.section-header, .component-card, .tilt-card, .glow-card, .glass-card, .reveal-card, .stacked-card, .spotlight-card'
     );
-
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry, i) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Stagger siblings
             const parent = entry.target.parentElement;
             const siblings = parent ? Array.from(parent.children).filter(
-              (el) => el.matches('.component-card, .tilt-card, .glow-card, .glass-card, .reveal-card, .stacked-card, .spotlight-card')
+              el => el.matches('.component-card, .tilt-card, .glow-card, .glass-card, .reveal-card, .stacked-card, .spotlight-card')
             ) : [];
             const index = siblings.indexOf(entry.target);
             const delay = index >= 0 ? index * 80 : 0;
-
-            setTimeout(() => {
-              entry.target.classList.add('visible');
-            }, delay);
-
+            setTimeout(() => entry.target.classList.add('visible'), delay);
             observer.unobserve(entry.target);
           }
         });
       },
       { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
     );
-
-    targets.forEach((t) => observer.observe(t));
+    targets.forEach(t => observer.observe(t));
   }
 
   // ═══════════════════════════════════
-  // 3. MAGNETIC BUTTONS
+  // NAV ACTIVE SECTION TRACKING
+  // ═══════════════════════════════════
+  function initNavActiveTracking() {
+    const sections = document.querySelectorAll('section[id]');
+    const pills = document.querySelectorAll('.nav-pill');
+    if (!sections.length || !pills.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            pills.forEach(pill => {
+              const href = pill.getAttribute('href');
+              if (href === '#' + id) {
+                pill.classList.add('active');
+              } else {
+                pill.classList.remove('active');
+              }
+            });
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '-100px 0px -50% 0px' }
+    );
+    sections.forEach(s => observer.observe(s));
+  }
+
+  // ═══════════════════════════════════
+  // MAGNETIC BUTTONS
   // ═══════════════════════════════════
   function initMagneticButtons() {
-    document.querySelectorAll('.magnetic-btn').forEach((btn) => {
+    document.querySelectorAll('.magnetic-btn').forEach(btn => {
       const strength = 0.3;
-
-      btn.addEventListener('mousemove', (e) => {
+      btn.addEventListener('mousemove', e => {
         const rect = btn.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
         btn.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
       });
-
       btn.addEventListener('mouseleave', () => {
         btn.style.transform = 'translate(0, 0)';
       });
@@ -89,20 +275,18 @@
   }
 
   // ═══════════════════════════════════
-  // 4. RIPPLE BUTTONS
+  // RIPPLE BUTTONS
   // ═══════════════════════════════════
   function initRippleButtons() {
-    document.querySelectorAll('.ripple-btn').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
+    document.querySelectorAll('.ripple-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
         const rect = btn.getBoundingClientRect();
         const ripple = document.createElement('span');
         const size = Math.max(rect.width, rect.height);
-
         ripple.className = 'ripple-effect';
         ripple.style.width = ripple.style.height = size + 'px';
         ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
         ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
-
         btn.appendChild(ripple);
         ripple.addEventListener('animationend', () => ripple.remove());
       });
@@ -110,24 +294,17 @@
   }
 
   // ═══════════════════════════════════
-  // 5. MORPHING BUTTON
+  // MORPHING BUTTON
   // ═══════════════════════════════════
   function initMorphButtons() {
-    document.querySelectorAll('.morph-btn').forEach((btn) => {
+    document.querySelectorAll('.morph-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         if (btn.dataset.state !== 'idle') return;
-
         const originalWidth = btn.offsetWidth;
         btn.style.width = originalWidth + 'px';
-
-        // → Loading
         btn.dataset.state = 'loading';
-
-        // → Success after 1.5s
         setTimeout(() => {
           btn.dataset.state = 'success';
-
-          // → Reset after 1.2s
           setTimeout(() => {
             btn.dataset.state = 'idle';
             btn.style.width = '';
@@ -138,82 +315,64 @@
   }
 
   // ═══════════════════════════════════
-  // 6. SPOTLIGHT BUTTONS
+  // SPOTLIGHT BUTTONS
   // ═══════════════════════════════════
   function initSpotlightButtons() {
-    document.querySelectorAll('.spotlight-btn').forEach((btn) => {
+    document.querySelectorAll('.spotlight-btn').forEach(btn => {
       const effect = btn.querySelector('.spotlight-effect');
       if (!effect) return;
-
-      btn.addEventListener('mousemove', (e) => {
+      btn.addEventListener('mousemove', e => {
         const rect = btn.getBoundingClientRect();
         effect.style.left = e.clientX - rect.left - 64 + 'px';
         effect.style.top = e.clientY - rect.top - 64 + 'px';
         effect.style.opacity = '1';
       });
-
-      btn.addEventListener('mouseleave', () => {
-        effect.style.opacity = '0';
-      });
+      btn.addEventListener('mouseleave', () => { effect.style.opacity = '0'; });
     });
   }
 
   // ═══════════════════════════════════
-  // 7. 3D TILT CARDS
+  // 3D TILT CARDS
   // ═══════════════════════════════════
   function initTiltCards() {
-    document.querySelectorAll('.tilt-card').forEach((card) => {
+    document.querySelectorAll('.tilt-card').forEach(card => {
       const inner = card.querySelector('.tilt-card-inner');
       const glare = card.querySelector('.tilt-card-glare');
       const floats = card.querySelectorAll('.tilt-card-float');
       if (!inner) return;
+      const maxTilt = 12, maxFloat = 8;
 
-      const maxTilt = 12; // degrees
-      const maxFloat = 8; // px parallax
-
-      card.addEventListener('mousemove', (e) => {
+      card.addEventListener('mousemove', e => {
         const rect = inner.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
-
-        const tiltX = (0.5 - y) * maxTilt;
-        const tiltY = (x - 0.5) * maxTilt;
-
-        inner.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
-
-        // Glare
+        inner.style.transform = `rotateX(${(0.5 - y) * maxTilt}deg) rotateY(${(x - 0.5) * maxTilt}deg) scale3d(1.02,1.02,1.02)`;
         if (glare) {
           glare.style.setProperty('--mouse-x', x * 100 + '%');
           glare.style.setProperty('--mouse-y', y * 100 + '%');
           glare.style.opacity = '1';
         }
-
-        // Parallax float
         floats.forEach((el, i) => {
-          const depth = (i + 1) * 0.3;
-          el.style.transform = `translate(${(x - 0.5) * maxFloat * depth}px, ${(y - 0.5) * maxFloat * depth}px)`;
+          const d = (i + 1) * 0.3;
+          el.style.transform = `translate(${(x - 0.5) * maxFloat * d}px, ${(y - 0.5) * maxFloat * d}px)`;
         });
       });
-
       card.addEventListener('mouseleave', () => {
-        inner.style.transform = 'rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        inner.style.transform = 'rotateX(0) rotateY(0) scale3d(1,1,1)';
         if (glare) glare.style.opacity = '0';
-        floats.forEach((el) => {
-          el.style.transform = 'translate(0, 0)';
-        });
+        floats.forEach(el => { el.style.transform = 'translate(0,0)'; });
       });
     });
   }
 
   // ═══════════════════════════════════
-  // 8. SPOTLIGHT CARDS (mouse follow light)
+  // SPOTLIGHT CARDS
   // ═══════════════════════════════════
   function initSpotlightCards() {
-    document.querySelectorAll('.spotlight-card').forEach((card) => {
+    document.querySelectorAll('.spotlight-card').forEach(card => {
       const light = card.querySelector('.spotlight-card-light');
       if (!light) return;
-
-      card.addEventListener('mousemove', (e) => {
+      card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
         light.style.left = e.clientX - rect.left - 150 + 'px';
         light.style.top = e.clientY - rect.top - 150 + 'px';
@@ -222,7 +381,7 @@
   }
 
   // ═══════════════════════════════════
-  // 9. INPUT VALIDATION
+  // INPUT VALIDATION
   // ═══════════════════════════════════
   function initInputValidation() {
     const wrapper = document.querySelector('.validation-wrapper');
@@ -231,38 +390,37 @@
     if (!input || !wrapper) return;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     let debounceTimer;
+
     input.addEventListener('input', () => {
       clearTimeout(debounceTimer);
       const val = input.value.trim();
-
       if (val === '') {
         wrapper.classList.remove('is-valid', 'is-invalid');
         if (msg) msg.textContent = '';
         return;
       }
-
       debounceTimer = setTimeout(() => {
+        const dict = i18n[currentLang];
         if (emailRegex.test(val)) {
           wrapper.classList.remove('is-invalid');
           wrapper.classList.add('is-valid');
-          if (msg) msg.textContent = 'Valid email address';
+          if (msg) msg.textContent = dict['validation.valid'];
         } else {
           wrapper.classList.remove('is-valid');
           wrapper.classList.add('is-invalid');
-          if (msg) msg.textContent = 'Please enter a valid email';
+          if (msg) msg.textContent = dict['validation.invalid'];
         }
       }, 300);
     });
   }
 
   // ═══════════════════════════════════
-  // 10. SMOOTH NAV SCROLL
+  // SMOOTH NAV SCROLL
   // ═══════════════════════════════════
   function initSmoothNav() {
-    document.querySelectorAll('a[href^="#"]').forEach((link) => {
-      link.addEventListener('click', (e) => {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
         const id = link.getAttribute('href');
         if (!id || id === '#') return;
         const target = document.querySelector(id);
@@ -275,34 +433,13 @@
   }
 
   // ═══════════════════════════════════
-  // 11. NAV BACKGROUND ON SCROLL
-  // ═══════════════════════════════════
-  function initNavScroll() {
-    const nav = document.querySelector('nav');
-    if (!nav) return;
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          if (window.scrollY > 50) {
-            nav.style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)';
-          } else {
-            nav.style.boxShadow = 'none';
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-  }
-
-  // ═══════════════════════════════════
   // BOOT
   // ═══════════════════════════════════
   function boot() {
     initTheme();
+    initI18n();
     initScrollReveal();
+    initNavActiveTracking();
     initMagneticButtons();
     initRippleButtons();
     initMorphButtons();
@@ -311,7 +448,6 @@
     initSpotlightCards();
     initInputValidation();
     initSmoothNav();
-    initNavScroll();
   }
 
   if (document.readyState === 'loading') {
