@@ -182,7 +182,7 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* ── Nav Logo — Premium ── */
+/* ── Nav Logo — Animated Atom ── */
 .logo-icon {
   transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-smooth);
   will-change: transform;
@@ -191,24 +191,69 @@ body {
   transform: scale(1.08) rotate(-3deg);
   box-shadow: 0 4px 16px rgba(88,86,214,0.5);
 }
-/* Logo inner glow pulse */
-.logo-glow {
+
+/* Atom container */
+.atom-logo {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  z-index: 10;
+}
+
+/* Orbiting rings */
+.atom-ring {
   position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: conic-gradient(from 0deg, #007AFF, #5856D6, #AF52DE, #FF2D55, #007AFF);
-  opacity: 0;
-  filter: blur(6px);
-  transition: opacity 0.5s ease;
-  z-index: -1;
+  inset: 0;
+  border: 1.2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  transform-origin: center;
 }
-.nav-logo:hover .logo-glow {
-  opacity: 0.6;
-  animation: logo-spin 3s linear infinite;
+.atom-ring-1 {
+  transform: rotateX(65deg) rotateZ(0deg);
+  animation: atom-orbit-1 4s linear infinite;
 }
-@keyframes logo-spin {
-  to { transform: rotate(360deg); }
+.atom-ring-2 {
+  transform: rotateX(65deg) rotateZ(60deg);
+  animation: atom-orbit-2 4s linear infinite;
 }
+.atom-ring-3 {
+  transform: rotateX(65deg) rotateZ(120deg);
+  animation: atom-orbit-3 4s linear infinite;
+}
+
+@keyframes atom-orbit-1 {
+  to { transform: rotateX(65deg) rotateZ(360deg); }
+}
+@keyframes atom-orbit-2 {
+  to { transform: rotateX(65deg) rotateZ(420deg); }
+}
+@keyframes atom-orbit-3 {
+  to { transform: rotateX(65deg) rotateZ(480deg); }
+}
+
+/* Core nucleus — pulse */
+.atom-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.6);
+  animation: atom-pulse 2s ease-in-out infinite;
+}
+@keyframes atom-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 6px 1px rgba(255,255,255,0.6); }
+  50% { transform: scale(1.3); box-shadow: 0 0 10px 2px rgba(255,255,255,0.9); }
+}
+
+/* Speed up on hover */
+.nav-logo:hover .atom-ring-1 { animation-duration: 1.5s; }
+.nav-logo:hover .atom-ring-2 { animation-duration: 1.5s; }
+.nav-logo:hover .atom-ring-3 { animation-duration: 1.5s; }
+.nav-logo:hover .atom-core { animation-duration: 0.8s; }
 
 /* ── Mobile Menu ── */
 .mobile-menu {
