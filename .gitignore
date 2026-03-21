@@ -32,3 +32,6 @@ logs/
 # OS files
 .DS_Store
 Thumbs.db
+
+# GitHub Actions workflows (no push permission)
+.github/workflows/
