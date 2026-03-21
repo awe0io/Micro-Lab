@@ -45,7 +45,7 @@ app.get('/', (c) => {
           <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]" />
         </div>
 
-        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto pb-28">
           <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-100/80 dark:bg-white/5 border border-gray-200/50 dark:border-white/10 backdrop-blur-sm mb-8 hero-fade-in" style="animation-delay: 0.1s">
             <span class="w-2 h-2 rounded-full bg-apple-green animate-pulse" />
             <span class="text-sm font-medium text-gray-600 dark:text-gray-400">前端微交互实验室</span>
@@ -74,7 +74,7 @@ app.get('/', (c) => {
         </div>
 
         {/* Scroll indicator */}
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 hero-fade-in" style="animation-delay: 1s">
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 hero-fade-in" style="animation-delay: 1s">
           <span class="text-xs text-gray-400 dark:text-gray-500 tracking-widest uppercase">Scroll</span>
           <div class="w-6 h-10 rounded-full border-2 border-gray-300 dark:border-gray-700 flex justify-center pt-2">
             <div class="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500 animate-bounce" />
