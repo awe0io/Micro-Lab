@@ -248,18 +248,30 @@
     const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
 
     if (animate) {
-      els.forEach(el => el.classList.add('i18n-switching'));
+      // Phase 1: slide-out with blur
+      els.forEach(el => {
+        el.classList.remove('i18n-in');
+        el.classList.add('i18n-out');
+      });
+
+      // Phase 2: swap text + slide-in
       setTimeout(() => {
         els.forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (dict[key]) el.textContent = dict[key];
-          el.classList.remove('i18n-switching');
+          el.classList.remove('i18n-out');
+          el.classList.add('i18n-in');
         });
         placeholders.forEach(el => {
           const key = el.getAttribute('data-i18n-placeholder');
           if (dict[key]) el.placeholder = dict[key];
         });
-      }, 150);
+      }, 250);
+
+      // Cleanup classes
+      setTimeout(() => {
+        els.forEach(el => el.classList.remove('i18n-in'));
+      }, 600);
     } else {
       els.forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -291,7 +303,7 @@
   }
 
   // ═══════════════════════════════════
-  // THEME TOGGLE
+  // THEME TOGGLE — Smooth Morph Transition
   // ═══════════════════════════════════
   function initTheme() {
     const toggle = document.getElementById('theme-toggle');
@@ -303,10 +315,32 @@
       document.documentElement.classList.add('dark');
     }
 
+    // Create theme flash overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'theme-transition-overlay';
+    document.body.appendChild(overlay);
+
+    let isAnimating = false;
+
     toggle.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      const nowDark = document.documentElement.classList.contains('dark');
-      localStorage.setItem('micro-lab-theme', nowDark ? 'dark' : 'light');
+      if (isAnimating) return;
+      isAnimating = true;
+
+      // Flash overlay — white/dark pulse
+      overlay.classList.add('flash');
+
+      // Toggle theme midway through the flash
+      setTimeout(() => {
+        document.documentElement.classList.toggle('dark');
+        const nowDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('micro-lab-theme', nowDark ? 'dark' : 'light');
+      }, 150);
+
+      // Fade out overlay
+      setTimeout(() => {
+        overlay.classList.remove('flash');
+        isAnimating = false;
+      }, 400);
     });
   }
 

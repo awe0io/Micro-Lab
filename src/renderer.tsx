@@ -13,8 +13,8 @@ export const renderer = jsxRenderer(({ children, title }) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="robots" content="noarchive, notranslate" />
 
-        {/* Favicon - inline SVG as data URI */}
-        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23007AFF'/%3E%3Cstop offset='50%25' stop-color='%235856D6'/%3E%3Cstop offset='100%25' stop-color='%23AF52DE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Cpath d='M18 8L11 19h5v5l7-11h-5z' fill='white'/%3E%3C/svg%3E" />
+        {/* Favicon - Premium SVG with glass effect */}
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23007AFF'/%3E%3Cstop offset='40%25' stop-color='%235856D6'/%3E%3Cstop offset='100%25' stop-color='%23AF52DE'/%3E%3C/linearGradient%3E%3ClinearGradient id='glass' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='white' stop-opacity='0.35'/%3E%3Cstop offset='50%25' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3ClinearGradient id='bolt' x1='0' y1='0' x2='0.5' y2='1'%3E%3Cstop offset='0%25' stop-color='white'/%3E%3Cstop offset='100%25' stop-color='white' stop-opacity='0.85'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeGaussianBlur stdDeviation='0.8' result='b'/%3E%3CfeComposite in='SourceGraphic' in2='b' operator='over'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23bg)'/%3E%3Crect width='32' height='16' rx='8' fill='url(%23glass)'/%3E%3Cpath d='M18 7L10 18h5.5v7L24 14h-5.5z' fill='url(%23bolt)' filter='url(%23glow)'/%3E%3C/svg%3E" />
 
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

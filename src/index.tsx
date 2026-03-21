@@ -167,8 +167,24 @@ app.get('/', (c) => {
 
             {/* Left: Logo */}
             <a href="#" class="nav-logo group flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-xl transition-all duration-300 hover:bg-white/[0.08] active:scale-[0.96]" data-section="hero">
-              <div class="logo-icon w-7 h-7 rounded-[10px] bg-gradient-to-br from-[#007AFF] via-[#5856D6] to-[#AF52DE] flex items-center justify-center shadow-[0_2px_8px_rgba(88,86,214,0.4)] ring-1 ring-white/15">
-                <svg class="w-[15px] h-[15px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h8v8l10-12h-8V2z"/></svg>
+              <div class="logo-icon relative w-7 h-7 rounded-[10px] bg-gradient-to-br from-[#007AFF] via-[#5856D6] to-[#AF52DE] flex items-center justify-center shadow-[0_2px_10px_rgba(88,86,214,0.45)] ring-1 ring-white/20 overflow-hidden">
+                <div class="logo-glow"></div>
+                {/* Inner glass reflection */}
+                <div class="absolute inset-0 bg-gradient-to-b from-white/25 via-transparent to-black/10 pointer-events-none rounded-[10px]"></div>
+                {/* Premium bolt with subtle glow */}
+                <svg class="w-[14px] h-[14px] text-white relative z-10" viewBox="0 0 24 24" fill="none">
+                  <defs>
+                    <linearGradient id="bolt-grad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#FFFFFF" />
+                      <stop offset="100%" stop-color="rgba(255,255,255,0.8)" />
+                    </linearGradient>
+                    <filter id="bolt-glow">
+                      <feGaussianBlur stdDeviation="1" result="blur" />
+                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                    </filter>
+                  </defs>
+                  <path d="M13 2L3 14h8v8l10-12h-8V2z" fill="url(#bolt-grad)" filter="url(#bolt-glow)" />
+                </svg>
               </div>
               <span class="font-semibold text-[14px] tracking-tight text-gray-800 dark:text-gray-100 hidden sm:inline transition-colors">Micro Lab</span>
             </a>
@@ -205,10 +221,12 @@ app.get('/', (c) => {
 
               <div class="nav-divider w-px h-3.5 bg-gray-300/40 dark:bg-white/[0.06] mx-0.5" />
 
-              {/* Theme Toggle */}
+              {/* Theme Toggle — Morph Animation */}
               <button id="theme-toggle" class="nav-action-btn w-8 h-8 rounded-[10px] flex items-center justify-center transition-all duration-300 active:scale-[0.88]" aria-label="Toggle theme">
-                <svg id="sun-icon" class="w-[15px] h-[15px] hidden dark:block transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-width="2"/></svg>
-                <svg id="moon-icon" class="w-[15px] h-[15px] block dark:hidden transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                <div class="theme-icon-wrapper">
+                  <svg class="theme-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/></svg>
+                  <svg class="theme-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </div>
               </button>
 
               {/* Mobile Menu Toggle */}
