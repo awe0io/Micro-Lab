@@ -461,6 +461,13 @@ body {
 }
 
 /* ══════════════════════════════════════
+   BACK TO TOP BUTTON
+   ══════════════════════════════════════ */
+#back-to-top {
+  transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-spring), box-shadow 0.3s var(--ease-smooth);
+}
+
+/* ══════════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════════ */
 @media (max-width: 640px) {

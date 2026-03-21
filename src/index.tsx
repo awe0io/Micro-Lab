@@ -3,10 +3,159 @@ import { renderer } from './renderer'
 
 const app = new Hono()
 
+// ══════════════════════════════════════════════════
+// SECURITY MIDDLEWARE — Defense in Depth
+// ══════════════════════════════════════════════════
+
+// ── 1. Block Sensitive Paths (Source code / internal files) ──
+app.use('*', async (c, next) => {
+  const path = new URL(c.req.url).pathname
+  const blockedPatterns = [
+    /^\/_worker\.js/,
+    /^\/src\//,
+    /^\/\.git/,
+    /^\/\.env/,
+    /^\/\.dev\.vars/,
+    /^\/wrangler\./,
+    /^\/node_modules\//,
+    /^\/tsconfig/,
+    /^\/package\.json/,
+    /^\/\.wrangler/,
+    /^\/migrations\//,
+    /^\/ecosystem\.config/,
+    /^\/vite\.config/,
+  ]
+  for (const pattern of blockedPatterns) {
+    if (pattern.test(path)) {
+      return c.text('Not Found', 404)
+    }
+  }
+  await next()
+})
+
+// ── 2. Security Response Headers ──
+app.use('*', async (c, next) => {
+  await next()
+
+  // Content Security Policy — strict but functional
+  c.header('Content-Security-Policy', [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' data: blob: https:",
+    "connect-src 'self'",
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "object-src 'none'",
+  ].join('; '))
+
+  // Anti-Clickjacking
+  c.header('X-Frame-Options', 'DENY')
+
+  // XSS Protection
+  c.header('X-Content-Type-Options', 'nosniff')
+  c.header('X-XSS-Protection', '1; mode=block')
+
+  // HTTPS enforcement
+  c.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload')
+
+  // Referrer control
+  c.header('Referrer-Policy', 'strict-origin-when-cross-origin')
+
+  // Permissions Policy — restrict powerful APIs
+  c.header('Permissions-Policy', [
+    'camera=()',
+    'microphone=()',
+    'geolocation=()',
+    'payment=()',
+    'usb=()',
+    'magnetometer=()',
+    'gyroscope=()',
+    'accelerometer=()',
+  ].join(', '))
+
+  // Prevent MIME sniffing
+  c.header('X-Permitted-Cross-Domain-Policies', 'none')
+
+  // Remove server info
+  c.header('X-Powered-By', '')
+  c.header('Server', '')
+})
+
+// ── 3. Anti-Crawling: Rate Limiting (in-memory per-IP) ──
+const rateLimitMap = new Map<string, { count: number; reset: number }>()
+const RATE_LIMIT = 120      // requests per window
+const RATE_WINDOW = 60_000  // 60 seconds
+
+app.use('*', async (c, next) => {
+  const ip = c.req.header('cf-connecting-ip')
+    || c.req.header('x-forwarded-for')?.split(',')[0]?.trim()
+    || 'unknown'
+  const now = Date.now()
+
+  let entry = rateLimitMap.get(ip)
+  if (!entry || now > entry.reset) {
+    entry = { count: 0, reset: now + RATE_WINDOW }
+    rateLimitMap.set(ip, entry)
+  }
+  entry.count++
+
+  // Cleanup old entries periodically
+  if (rateLimitMap.size > 10000) {
+    for (const [key, val] of rateLimitMap) {
+      if (now > val.reset) rateLimitMap.delete(key)
+    }
+  }
+
+  c.header('X-RateLimit-Limit', String(RATE_LIMIT))
+  c.header('X-RateLimit-Remaining', String(Math.max(0, RATE_LIMIT - entry.count)))
+
+  if (entry.count > RATE_LIMIT) {
+    return c.text('Too Many Requests', 429)
+  }
+
+  await next()
+})
+
+// ── 4. Anti-Crawling: Bot Detection (UA Filter) ──
+const BOT_PATTERNS = /\b(scrapy|httpclient|python-requests|curl\/|wget|spider|crawler|bot\/|headlesschrome|phantomjs|selenium|puppeteer)\b/i
+app.use('*', async (c, next) => {
+  const ua = c.req.header('user-agent') || ''
+  // Only block on API routes — allow page access for legit bots like Googlebot
+  if (new URL(c.req.url).pathname.startsWith('/api/')) {
+    if (!ua || BOT_PATTERNS.test(ua)) {
+      return c.json({ error: 'Access Denied' }, 403)
+    }
+  }
+  await next()
+})
+
+// ── 5. Anti-Injection: Content-Type & Input Sanitization ──
+app.use('/api/*', async (c, next) => {
+  const method = c.req.method
+  if (['POST', 'PUT', 'PATCH'].includes(method)) {
+    const ct = c.req.header('content-type') || ''
+    if (!ct.includes('application/json') && !ct.includes('application/x-www-form-urlencoded') && !ct.includes('multipart/form-data')) {
+      return c.json({ error: 'Unsupported Content-Type' }, 415)
+    }
+  }
+  await next()
+})
+
+// ── 6. Honeypot Trap (hidden endpoint for bots) ──
+app.all('/admin', (c) => c.text('Not Found', 404))
+app.all('/wp-admin', (c) => c.text('Not Found', 404))
+app.all('/wp-login.php', (c) => c.text('Not Found', 404))
+app.all('/.env', (c) => c.text('Not Found', 404))
+app.all('/phpinfo.php', (c) => c.text('Not Found', 404))
+app.all('/config.php', (c) => c.text('Not Found', 404))
+
 app.use(renderer)
 
 // ──────────────────────────────────────────────
-// Main Page — Micro-interaction Lab v2.0
+// Main Page — Micro-interaction Lab v3.0
 // ──────────────────────────────────────────────
 app.get('/', (c) => {
   return c.render(
@@ -518,20 +667,32 @@ app.get('/', (c) => {
               <span class="font-semibold text-lg">Micro Lab</span>
             </div>
             <p class="text-sm text-gray-400 dark:text-gray-500 mb-3 max-w-md" data-i18n="footer.tagline">以极致的细节打造每一个交互</p>
-            <p class="text-xs text-gray-300 dark:text-gray-700 mb-8">Apple-style Motion &middot; 60fps &middot; Premium UI Components</p>
+            <p class="text-xs text-gray-300 dark:text-gray-700 mb-6">Apple-style Motion &middot; 60fps &middot; Premium UI Components</p>
+
+            {/* Security badge */}
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 dark:bg-green-900/10 border border-green-200/50 dark:border-green-800/30 mb-8">
+              <svg class="w-3.5 h-3.5 text-[#34C759]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              <span class="text-[11px] font-medium text-[#34C759]" data-i18n="footer.security">安全防护已启用</span>
+            </div>
+
             {/* Social-like links */}
             <div class="flex items-center gap-6 mb-8">
-              <a href="https://github.com" target="_blank" rel="noopener" class="text-gray-400 hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-400 transition-colors duration-300">
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-400 transition-colors duration-300">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
               </a>
               <a href="#" class="text-gray-400 hover:text-gray-600 dark:text-gray-600 dark:hover:text-gray-400 transition-colors duration-300">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
               </a>
             </div>
-            <div class="text-[11px] text-gray-300 dark:text-gray-700">&copy; 2026 Micro Lab &middot; Built with Hono + Cloudflare Pages</div>
+            <div class="text-[11px] text-gray-300 dark:text-gray-700">&copy; 2026 Micro Lab &middot; Built with Hono + Cloudflare Pages &middot; Security Hardened</div>
           </div>
         </div>
       </footer>
+
+      {/* ═══════════ BACK TO TOP BUTTON ═══════════ */}
+      <button id="back-to-top" class="fixed bottom-6 right-6 z-40 w-10 h-10 rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.3)] flex items-center justify-center opacity-0 translate-y-4 pointer-events-none transition-all duration-300 hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_8px_28px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 active:scale-[0.92]" aria-label="Back to top">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+      </button>
     </>
   )
 })
@@ -540,9 +701,26 @@ app.get('/', (c) => {
 app.get('/api/info', (c) => {
   return c.json({
     name: 'Micro-interaction Lab',
-    version: '2.0.0',
+    version: '3.0.0',
     components: ['Magical Buttons', 'Smooth Cards', 'Input Feedback', 'Micro Loaders'],
+    security: ['CSP', 'HSTS', 'Rate-Limiting', 'Bot-Detection', 'XSS-Protection', 'Anti-Injection'],
   })
+})
+
+// Security health check
+app.get('/api/health', (c) => {
+  return c.json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
+// Catch-all 404 for unknown routes
+app.notFound((c) => {
+  return c.text('Not Found', 404)
+})
+
+// Global error handler
+app.onError((err, c) => {
+  console.error('Server Error:', err.message)
+  return c.text('Internal Server Error', 500)
 })
 
 export default app
