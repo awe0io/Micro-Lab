@@ -167,15 +167,9 @@ app.get('/', (c) => {
 
             {/* Left: Logo */}
             <a href="#" class="nav-logo group flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-xl transition-all duration-300 hover:bg-white/[0.08] active:scale-[0.96]" data-section="hero">
-              <div class="logo-icon relative w-7 h-7 rounded-[10px] bg-gradient-to-br from-[#007AFF] via-[#5856D6] to-[#AF52DE] flex items-center justify-center shadow-[0_2px_10px_rgba(88,86,214,0.45)] ring-1 ring-white/20 overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-b from-white/25 via-transparent to-black/10 pointer-events-none rounded-[10px]"></div>
-                {/* Animated atom */}
-                <div class="atom-logo">
-                  <div class="atom-ring atom-ring-1"></div>
-                  <div class="atom-ring atom-ring-2"></div>
-                  <div class="atom-ring atom-ring-3"></div>
-                  <div class="atom-core"></div>
-                </div>
+              <div class="logo-icon relative w-7 h-7 rounded-[10px] flex items-center justify-center overflow-hidden">
+                <div class="logo-shape"></div>
+                <div class="logo-shape-ring"></div>
               </div>
               <span class="font-semibold text-[14px] tracking-tight text-gray-800 dark:text-gray-100 hidden sm:inline transition-colors">Micro Lab</span>
             </a>

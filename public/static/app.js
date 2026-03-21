@@ -248,20 +248,24 @@
     const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
 
     if (animate) {
-      // Simple crossfade: fade out → swap → fade in
-      els.forEach(el => { el.style.opacity = '0'; });
+      // Phase 1: staggered fade-out (wave effect)
+      els.forEach((el, i) => {
+        setTimeout(() => el.classList.add('i18n-fade-out'), i * 12);
+      });
 
+      // Phase 2: swap text + staggered fade-in
+      const totalOut = els.length * 12 + 150;
       setTimeout(() => {
-        els.forEach(el => {
+        els.forEach((el, i) => {
           const key = el.getAttribute('data-i18n');
           if (dict[key]) el.textContent = dict[key];
-          el.style.opacity = '';
+          setTimeout(() => el.classList.remove('i18n-fade-out'), i * 12);
         });
         placeholders.forEach(el => {
           const key = el.getAttribute('data-i18n-placeholder');
           if (dict[key]) el.placeholder = dict[key];
         });
-      }, 200);
+      }, totalOut);
     } else {
       els.forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -288,12 +292,12 @@
       label.textContent = currentLang === 'zh' ? 'EN' : '中';
       applyI18n(currentLang, true);
       // Re-update nav indicator after text change
-      setTimeout(() => updateNavIndicator(), 200);
+      setTimeout(() => updateNavIndicator(), 500);
     });
   }
 
   // ═══════════════════════════════════
-  // THEME TOGGLE — Clean CSS Transition
+  // THEME TOGGLE — Smooth Global Transition
   // ═══════════════════════════════════
   function initTheme() {
     const toggle = document.getElementById('theme-toggle');
@@ -306,9 +310,16 @@
     }
 
     toggle.addEventListener('click', () => {
+      // Enable transitions on ALL elements for 0.5s
+      document.documentElement.classList.add('theme-transitioning');
       document.documentElement.classList.toggle('dark');
       const nowDark = document.documentElement.classList.contains('dark');
       localStorage.setItem('micro-lab-theme', nowDark ? 'dark' : 'light');
+
+      // Remove transitioning class after animation completes
+      setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning');
+      }, 600);
     });
   }
 

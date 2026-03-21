@@ -13,8 +13,8 @@ export const renderer = jsxRenderer(({ children, title }) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="robots" content="noarchive, notranslate" />
 
-        {/* Favicon - Atom/Lab icon */}
-        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23007AFF'/%3E%3Cstop offset='40%25' stop-color='%235856D6'/%3E%3Cstop offset='100%25' stop-color='%23AF52DE'/%3E%3C/linearGradient%3E%3ClinearGradient id='gl' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='white' stop-opacity='0.3'/%3E%3Cstop offset='50%25' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23bg)'/%3E%3Crect width='32' height='16' rx='8' fill='url(%23gl)'/%3E%3Cg transform='translate(16 16)' fill='none' stroke='white' stroke-width='1.6' opacity='0.9'%3E%3Cellipse rx='9' ry='3.5' transform='rotate(-30)'/%3E%3Cellipse rx='9' ry='3.5' transform='rotate(30)'/%3E%3Cellipse rx='9' ry='3.5' transform='rotate(90)'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='2' fill='white'/%3E%3C/svg%3E" />
+        {/* Favicon */}
+        <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%23111'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='url(%23a)' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='url(%23a)'/%3E%3C/svg%3E" />
 
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

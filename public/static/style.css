@@ -34,24 +34,7 @@ html {
 
 /* ── Body global transition ── */
 body {
-  transition: background-color 0.4s ease, color 0.4s ease;
-}
-
-/* Smooth theme transition on all major elements */
-.nav-glass,
-.nav-indicator,
-.nav-pill,
-.nav-action-btn,
-.mobile-menu,
-.mobile-nav-link,
-.component-card,
-.tilt-card-inner,
-.hero-cta-primary,
-.hero-cta-secondary,
-#back-to-top {
-  transition-property: background-color, color, border-color, box-shadow, opacity, transform;
-  transition-duration: 0.4s;
-  transition-timing-function: ease;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 /* ══════════════════════════════════════
@@ -182,78 +165,52 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* ── Nav Logo — Animated Atom ── */
+/* ── Nav Logo — Morphing Shape ── */
 .logo-icon {
-  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-smooth);
+  transition: transform 0.4s var(--ease-spring);
   will-change: transform;
 }
 .nav-logo:hover .logo-icon {
-  transform: scale(1.08) rotate(-3deg);
-  box-shadow: 0 4px 16px rgba(88,86,214,0.5);
+  transform: scale(1.1);
 }
 
-/* Atom container */
-.atom-logo {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  z-index: 10;
-}
-
-/* Orbiting rings */
-.atom-ring {
+/* Core shape: morphing circle↔squircle with rotating gradient */
+.logo-shape {
   position: absolute;
   inset: 0;
-  border: 1.2px solid rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
-  transform-origin: center;
+  background: conic-gradient(from var(--logo-angle, 0deg), #6366f1, #a855f7, #ec4899, #6366f1);
+  border-radius: 35%;
+  animation: logo-morph 6s var(--ease-smooth) infinite, logo-rotate 8s linear infinite;
+  will-change: transform, border-radius;
 }
-.atom-ring-1 {
-  transform: rotateX(65deg) rotateZ(0deg);
-  animation: atom-orbit-1 4s linear infinite;
+@keyframes logo-morph {
+  0%, 100% { border-radius: 35%; }
+  25% { border-radius: 50%; }
+  50% { border-radius: 28% 50% 28% 50%; }
+  75% { border-radius: 50%; }
 }
-.atom-ring-2 {
-  transform: rotateX(65deg) rotateZ(60deg);
-  animation: atom-orbit-2 4s linear infinite;
+@keyframes logo-rotate {
+  to { --logo-angle: 360deg; }
 }
-.atom-ring-3 {
-  transform: rotateX(65deg) rotateZ(120deg);
-  animation: atom-orbit-3 4s linear infinite;
-}
-
-@keyframes atom-orbit-1 {
-  to { transform: rotateX(65deg) rotateZ(360deg); }
-}
-@keyframes atom-orbit-2 {
-  to { transform: rotateX(65deg) rotateZ(420deg); }
-}
-@keyframes atom-orbit-3 {
-  to { transform: rotateX(65deg) rotateZ(480deg); }
+/* Fallback: rotate the gradient via transform since @property may not be supported */
+.logo-shape {
+  animation: logo-morph 6s var(--ease-smooth) infinite;
+  background: conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1);
 }
 
-/* Core nucleus — pulse */
-.atom-core {
+/* Orbiting ring */
+.logo-shape-ring {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  margin: -2px 0 0 -2px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.6);
-  animation: atom-pulse 2s ease-in-out infinite;
-}
-@keyframes atom-pulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 6px 1px rgba(255,255,255,0.6); }
-  50% { transform: scale(1.3); box-shadow: 0 0 10px 2px rgba(255,255,255,0.9); }
+  inset: 1px;
+  border-radius: inherit;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  animation: logo-morph 6s var(--ease-smooth) infinite;
+  pointer-events: none;
 }
 
-/* Speed up on hover */
-.nav-logo:hover .atom-ring-1 { animation-duration: 1.5s; }
-.nav-logo:hover .atom-ring-2 { animation-duration: 1.5s; }
-.nav-logo:hover .atom-ring-3 { animation-duration: 1.5s; }
-.nav-logo:hover .atom-core { animation-duration: 0.8s; }
+/* Hover: speed up */
+.nav-logo:hover .logo-shape { animation-duration: 2s; }
+.nav-logo:hover .logo-shape-ring { animation-duration: 2s; }
 
 /* ── Mobile Menu ── */
 .mobile-menu {
@@ -316,7 +273,7 @@ body {
 }
 
 /* ══════════════════════════════════════
-   THEME TOGGLE — Sun/Moon Morph
+   THEME TOGGLE — Smooth Icon Morph
    ══════════════════════════════════════ */
 .theme-icon-wrapper {
   position: relative;
@@ -328,23 +285,40 @@ body {
   inset: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.45s var(--ease-spring), opacity 0.3s ease;
+  transition: transform 0.6s var(--ease-spring), opacity 0.4s ease;
+  will-change: transform;
 }
+/* Sun (visible in dark mode) */
 .theme-sun {
   opacity: 0;
-  transform: rotate(-60deg) scale(0.6);
+  transform: rotate(-45deg) scale(0);
 }
 .dark .theme-sun {
   opacity: 1;
   transform: rotate(0deg) scale(1);
 }
+/* Moon (visible in light mode) */
 .theme-moon {
   opacity: 1;
   transform: rotate(0deg) scale(1);
 }
 .dark .theme-moon {
   opacity: 0;
-  transform: rotate(60deg) scale(0.6);
+  transform: rotate(45deg) scale(0);
+}
+
+/* Global smooth color transitions for theme switch */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: 0s;
+  transition-timing-function: ease;
+}
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition-duration: 0.5s !important;
 }
 
 /* ══════════════════════════════════════
@@ -568,10 +542,14 @@ body {
 @keyframes ripple-expand { to { transform: scale(4); opacity: 0; } }
 
 /* ══════════════════════════════════════
-   i18n TRANSITION — Simple Crossfade
+   i18n TRANSITION — Staggered Crossfade
    ══════════════════════════════════════ */
 [data-i18n] {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.25s ease, transform 0.25s var(--ease-out-expo);
+}
+[data-i18n].i18n-fade-out {
+  opacity: 0;
+  transform: translateY(3px);
 }
 
 /* ══════════════════════════════════════
