@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation
+    url: https://github.com/zhuj3188-ship-it/prospective#readme
+    about: Check the README for project documentation
+  - name: Discussions
+    url: https://github.com/zhuj3188-ship-it/prospective/discussions
+    about: Ask questions and discuss ideas
