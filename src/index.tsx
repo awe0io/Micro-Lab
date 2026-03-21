@@ -167,8 +167,8 @@ app.get('/', (c) => {
 
             {/* Left: Logo */}
             <a href="#" class="nav-logo group flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-xl transition-all duration-300 hover:bg-white/[0.08] active:scale-[0.96]" data-section="hero">
-              <div class="logo-icon w-7 h-7 rounded-[10px] bg-gradient-to-br from-[#007AFF] via-[#5856D6] to-[#AF52DE] flex items-center justify-center shadow-[0_2px_8px_rgba(88,86,214,0.35)] ring-1 ring-white/10">
-                <svg class="w-3.5 h-3.5 text-white drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <div class="logo-icon w-7 h-7 rounded-[10px] bg-gradient-to-br from-[#007AFF] via-[#5856D6] to-[#AF52DE] flex items-center justify-center shadow-[0_2px_8px_rgba(88,86,214,0.4)] ring-1 ring-white/15">
+                <svg class="w-[15px] h-[15px] text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h8v8l10-12h-8V2z"/></svg>
               </div>
               <span class="font-semibold text-[14px] tracking-tight text-gray-800 dark:text-gray-100 hidden sm:inline transition-colors">Micro Lab</span>
             </a>
@@ -281,7 +281,7 @@ app.get('/', (c) => {
             <span class="text-sm text-gray-400 dark:text-gray-500 mt-1 inline-block">Apple-style Motion · 60fps Silk-smooth · Premium UI</span>
           </p>
 
-          <div class="hero-element flex flex-wrap justify-center gap-4" style="--delay: 0.6s">
+          <div class="hero-element flex justify-center gap-4" style="--delay: 0.6s">
             <a href="#buttons" class="hero-cta-primary group relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium text-sm overflow-hidden transition-all duration-300 active:scale-[0.96]">
               <span class="hero-cta-bg absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white"></span>
               <span class="hero-cta-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent bg-[size:200%_100%] animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
@@ -293,13 +293,13 @@ app.get('/', (c) => {
               Source
             </a>
           </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <div class="hero-element absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" style="--delay: 1.2s">
-          <span class="text-[11px] text-gray-400 dark:text-gray-500 tracking-[0.2em] uppercase font-medium" data-i18n="hero.scroll">向下滚动</span>
-          <div class="scroll-mouse w-5 h-8 rounded-full border-[1.5px] border-gray-300 dark:border-gray-600 flex justify-center pt-1.5">
-            <div class="w-1 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500 animate-scroll-dot" />
+          {/* Scroll indicator — centered below CTA buttons */}
+          <div class="hero-element mt-10 flex flex-col items-center gap-2" style="--delay: 1.2s">
+            <span class="text-[11px] text-gray-400 dark:text-gray-500 tracking-[0.2em] uppercase font-medium" data-i18n="hero.scroll">向下滚动</span>
+            <div class="scroll-mouse w-5 h-8 rounded-full border-[1.5px] border-gray-300 dark:border-gray-600 flex justify-center pt-1.5">
+              <div class="w-1 h-1.5 rounded-full bg-gray-400 dark:bg-gray-500 animate-scroll-dot" />
+            </div>
           </div>
         </div>
       </section>
