@@ -248,14 +248,11 @@
     const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
 
     if (animate) {
-      // Phase 1: all elements fade out together (fast, clean)
-      els.forEach(el => {
-        el.classList.add('i18n-fade-out');
-      });
+      // Fast crossfade: 150ms out → swap → 150ms in (no gap, no movement)
+      els.forEach(el => el.classList.add('i18n-fade-out'));
 
-      // Phase 2: after fade-out completes, swap text + fade in
       setTimeout(() => {
-        // Swap all text content
+        // Swap text while invisible
         els.forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (dict[key]) el.textContent = dict[key];
@@ -265,18 +262,14 @@
           if (dict[key]) el.placeholder = dict[key];
         });
 
-        // Force layout recalc before removing class (ensures transition triggers)
-        void document.body.offsetHeight;
+        // Immediately update nav indicator BEFORE fade-in (user won't see the jump)
+        updateNavIndicator();
 
-        // Fade in all elements
+        // Fade in on next frame
         requestAnimationFrame(() => {
-          els.forEach(el => {
-            el.classList.remove('i18n-fade-out');
-          });
-          // Update nav indicator after text size changes settle
-          setTimeout(() => updateNavIndicator(), 350);
+          els.forEach(el => el.classList.remove('i18n-fade-out'));
         });
-      }, 300); // match CSS transition duration
+      }, 160); // slightly longer than CSS 150ms to ensure fade-out completes
     } else {
       els.forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -294,8 +287,32 @@
     const label = document.getElementById('lang-label');
     if (!btn) return;
 
+    // Pre-calculate nav pill widths for both languages to prevent layout shift
+    const navPills = document.querySelectorAll('.nav-pill-track .nav-pill');
+    navPills.forEach(pill => {
+      const span = pill.querySelector('[data-i18n]');
+      if (!span) return;
+      const key = span.getAttribute('data-i18n');
+      // Measure width with Chinese text
+      const zhText = i18n.zh[key] || span.textContent;
+      const enText = i18n.en[key] || span.textContent;
+      span.textContent = zhText;
+      const zhWidth = pill.getBoundingClientRect().width;
+      span.textContent = enText;
+      const enWidth = pill.getBoundingClientRect().width;
+      // Set min-width to the larger of the two
+      pill.style.minWidth = Math.ceil(Math.max(zhWidth, enWidth)) + 'px';
+      pill.style.textAlign = 'center';
+      // Restore current language text
+      const currentText = (currentLang === 'zh' ? i18n.zh : i18n.en)[key];
+      if (currentText) span.textContent = currentText;
+    });
+
     applyI18n(currentLang, false);
     label.textContent = currentLang === 'zh' ? 'EN' : '中';
+
+    // Update indicator after fixed widths are set
+    requestAnimationFrame(() => updateNavIndicator());
 
     btn.addEventListener('click', () => {
       currentLang = currentLang === 'zh' ? 'en' : 'zh';
