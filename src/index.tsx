@@ -228,19 +228,24 @@ app.get('/', (c) => {
           {/* Mobile Menu Dropdown */}
           <div id="mobile-menu" class="mobile-menu hidden md:hidden mt-1.5 rounded-2xl overflow-hidden">
             <div class="mobile-menu-inner p-2 flex flex-col gap-0.5">
-              <a href="#" class="mobile-nav-link px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="hero">
+              <a href="#" class="mobile-nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="hero">
+                <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1"/></svg>
                 <span data-i18n="nav.home">首页</span>
               </a>
-              <a href="#buttons" class="mobile-nav-link px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="buttons">
+              <a href="#buttons" class="mobile-nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="buttons">
+                <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
                 <span data-i18n="nav.buttons">交互按钮</span>
               </a>
-              <a href="#cards" class="mobile-nav-link px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="cards">
+              <a href="#cards" class="mobile-nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="cards">
+                <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                 <span data-i18n="nav.cards">视差卡片</span>
               </a>
-              <a href="#inputs" class="mobile-nav-link px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="inputs">
+              <a href="#inputs" class="mobile-nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="inputs">
+                <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 <span data-i18n="nav.inputs">灵动输入</span>
               </a>
-              <a href="#loaders" class="mobile-nav-link px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="loaders">
+              <a href="#loaders" class="mobile-nav-link flex items-center gap-3 px-4 py-2.5 rounded-xl text-[14px] font-medium transition-all duration-200" data-section="loaders">
+                <svg class="w-4 h-4 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                 <span data-i18n="nav.loaders">趣味等待</span>
               </a>
             </div>
@@ -249,12 +254,12 @@ app.get('/', (c) => {
       </nav>
 
       {/* ═══════════ HERO SECTION ═══════════ */}
-      <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" id="hero-section">
+      <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 sm:pt-20" id="hero-section">
         {/* Animated gradient mesh background */}
         <div class="absolute inset-0 overflow-hidden">
-          <div class="hero-orb absolute w-[600px] h-[600px] -top-40 -left-40 rounded-full bg-gradient-to-br from-[#007AFF]/20 to-[#5856D6]/20 dark:from-[#007AFF]/10 dark:to-[#5856D6]/10 blur-[80px]" style="animation: orb-float 20s ease-in-out infinite" />
-          <div class="hero-orb absolute w-[500px] h-[500px] -bottom-40 -right-40 rounded-full bg-gradient-to-br from-[#FF2D55]/20 to-[#FF9500]/20 dark:from-[#FF2D55]/10 dark:to-[#FF9500]/10 blur-[80px]" style="animation: orb-float 20s ease-in-out infinite; animation-delay: -7s" />
-          <div class="hero-orb absolute w-[350px] h-[350px] top-1/3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-br from-[#5AC8FA]/15 to-[#34C759]/15 dark:from-[#5AC8FA]/5 dark:to-[#34C759]/5 blur-[80px]" style="animation: orb-float 20s ease-in-out infinite; animation-delay: -3s" />
+          <div class="hero-orb absolute w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] -top-20 sm:-top-40 -left-20 sm:-left-40 rounded-full bg-gradient-to-br from-[#007AFF]/20 to-[#5856D6]/20 dark:from-[#007AFF]/10 dark:to-[#5856D6]/10 blur-[50px] sm:blur-[80px]" style="animation: orb-float 20s ease-in-out infinite" />
+          <div class="hero-orb absolute w-[250px] h-[250px] sm:w-[500px] sm:h-[500px] -bottom-20 sm:-bottom-40 -right-20 sm:-right-40 rounded-full bg-gradient-to-br from-[#FF2D55]/20 to-[#FF9500]/20 dark:from-[#FF2D55]/10 dark:to-[#FF9500]/10 blur-[50px] sm:blur-[80px]" style="animation: orb-float 20s ease-in-out infinite; animation-delay: -7s" />
+          <div class="hero-orb absolute w-[200px] h-[200px] sm:w-[350px] sm:h-[350px] top-1/3 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-br from-[#5AC8FA]/15 to-[#34C759]/15 dark:from-[#5AC8FA]/5 dark:to-[#34C759]/5 blur-[50px] sm:blur-[80px]" style="animation: orb-float 20s ease-in-out infinite; animation-delay: -3s" />
           {/* Subtle dot grid */}
           <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.04)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.03)_1px,transparent_0)] bg-[size:32px_32px]" />
         </div>
@@ -262,7 +267,7 @@ app.get('/', (c) => {
         {/* Floating particles */}
         <div class="hero-particles absolute inset-0 pointer-events-none" id="hero-particles"></div>
 
-        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+        <div class="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
           <div class="hero-element inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-gray-200/50 dark:border-white/10 backdrop-blur-md mb-8 shadow-sm" style="--delay: 0.1s">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34C759] opacity-75"></span>
@@ -284,14 +289,14 @@ app.get('/', (c) => {
             <span class="text-sm text-gray-400 dark:text-gray-500 mt-1 inline-block">Apple-style Motion · 60fps Silk-smooth · Premium UI</span>
           </p>
 
-          <div class="hero-element flex justify-center gap-4" style="--delay: 0.6s">
-            <a href="#buttons" class="hero-cta-primary group relative inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium text-sm overflow-hidden transition-all duration-300 active:scale-[0.96]">
+          <div class="hero-element flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4 sm:px-0" style="--delay: 0.6s">
+            <a href="#buttons" class="hero-cta-primary group relative inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:py-3.5 rounded-full font-medium text-sm overflow-hidden transition-all duration-300 active:scale-[0.96]">
               <span class="hero-cta-bg absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white"></span>
               <span class="hero-cta-shimmer absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent bg-[size:200%_100%] animate-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
               <span class="relative z-10 text-white dark:text-gray-900" data-i18n="hero.cta">探索组件</span>
               <svg class="w-4 h-4 relative z-10 text-white dark:text-gray-900 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener" class="hero-cta-secondary inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium text-sm transition-all duration-300 active:scale-[0.96]">
+            <a href="https://github.com" target="_blank" rel="noopener" class="hero-cta-secondary inline-flex items-center justify-center gap-2 px-7 py-3.5 sm:py-3.5 rounded-full font-medium text-sm transition-all duration-300 active:scale-[0.96]">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
               Source
             </a>
@@ -308,7 +313,7 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: MAGICAL BUTTONS ═══════════ */}
-      <section id="buttons" class="relative py-20 sm:py-24 px-6">
+      <section id="buttons" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
         {/* Section decoration */}
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#007AFF]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
@@ -389,7 +394,7 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: SMOOTH CARDS ═══════════ */}
-      <section id="cards" class="relative py-20 sm:py-24 px-6">
+      <section id="cards" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#AF52DE]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
           <div class="section-header mb-12 sm:mb-16">
@@ -509,7 +514,7 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: INPUT FEEDBACK ═══════════ */}
-      <section id="inputs" class="relative py-20 sm:py-24 px-6">
+      <section id="inputs" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#34C759]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
           <div class="section-header mb-12 sm:mb-16">
@@ -579,7 +584,7 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: MICRO LOADERS ═══════════ */}
-      <section id="loaders" class="relative py-20 sm:py-24 px-6">
+      <section id="loaders" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#FF9500]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
           <div class="section-header mb-12 sm:mb-16">
@@ -659,7 +664,7 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ FOOTER ═══════════ */}
-      <footer class="relative py-20 px-6 border-t border-gray-100 dark:border-white/[0.04]">
+      <footer class="relative py-12 sm:py-20 px-4 sm:px-6 border-t border-gray-100 dark:border-white/[0.04]">
         <div class="max-w-6xl mx-auto">
           <div class="flex flex-col items-center text-center">
             {/* Logo */}

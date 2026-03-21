@@ -365,6 +365,8 @@
       menu.classList.remove('hidden', 'closing');
       menu.classList.add('open');
       hamburger?.classList.add('open');
+      // Prevent body scroll while menu is open
+      document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
@@ -372,6 +374,7 @@
       isOpen = false;
       menu.classList.add('closing');
       hamburger?.classList.remove('open');
+      document.body.style.overflow = '';
       setTimeout(() => {
         menu.classList.remove('open', 'closing');
         menu.classList.add('hidden');
@@ -382,9 +385,12 @@
       isOpen ? closeMenu() : openMenu();
     });
 
-    // Close on link click
+    // Close on link click (with slight delay for visual feedback)
     menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => closeMenu());
+      link.addEventListener('click', () => {
+        // Brief highlight then close
+        setTimeout(() => closeMenu(), 100);
+      });
     });
 
     // Close on outside click
@@ -392,6 +398,11 @@
       if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) {
         closeMenu();
       }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && isOpen) closeMenu();
     });
   }
 
@@ -587,17 +598,23 @@
   // ═══════════════════════════════════
   // HERO PARTICLES
   // ═══════════════════════════════════
+  // ═══════════════════════════════════
+  // DEVICE DETECTION
+  // ═══════════════════════════════════
+  const isTouchDevice = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  const isMobile = window.innerWidth <= 640;
+
   function initHeroParticles() {
     const container = document.getElementById('hero-particles');
     if (!container) return;
 
     const colors = ['#007AFF', '#AF52DE', '#FF2D55', '#5AC8FA', '#34C759', '#FF9500'];
-    const count = 12;
+    const count = isMobile ? 6 : 12; // Fewer particles on mobile for performance
 
     for (let i = 0; i < count; i++) {
       const particle = document.createElement('div');
       particle.className = 'hero-particle';
-      const size = 2 + Math.random() * 4;
+      const size = isMobile ? (1.5 + Math.random() * 2.5) : (2 + Math.random() * 4);
       const color = colors[Math.floor(Math.random() * colors.length)];
       particle.style.cssText = `
         width: ${size}px; height: ${size}px;
@@ -615,6 +632,7 @@
   // MAGNETIC BUTTONS
   // ═══════════════════════════════════
   function initMagneticButtons() {
+    if (isTouchDevice) return; // Magnetic effect only works with mouse
     document.querySelectorAll('.magnetic-btn').forEach(btn => {
       const strength = 0.3;
       btn.addEventListener('mousemove', e => {
@@ -673,6 +691,7 @@
   // SPOTLIGHT BUTTONS
   // ═══════════════════════════════════
   function initSpotlightButtons() {
+    if (isTouchDevice) return; // Spotlight follows cursor, not useful on touch
     document.querySelectorAll('.spotlight-btn').forEach(btn => {
       const effect = btn.querySelector('.spotlight-effect');
       if (!effect) return;
@@ -690,6 +709,7 @@
   // 3D TILT CARDS
   // ═══════════════════════════════════
   function initTiltCards() {
+    if (isTouchDevice) return; // 3D tilt requires mouse tracking
     document.querySelectorAll('.tilt-card').forEach(card => {
       const inner = card.querySelector('.tilt-card-inner');
       const glare = card.querySelector('.tilt-card-glare');
@@ -724,6 +744,7 @@
   // SPOTLIGHT CARDS
   // ═══════════════════════════════════
   function initSpotlightCards() {
+    if (isTouchDevice) return; // Spotlight follows cursor
     document.querySelectorAll('.spotlight-card').forEach(card => {
       const light = card.querySelector('.spotlight-card-light');
       if (!light) return;
