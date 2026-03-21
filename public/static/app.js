@@ -379,6 +379,8 @@
   // NAV SLIDING INDICATOR
   // ═══════════════════════════════════
   let activeSection = 'hero';
+  let isNavigating = false;   // Lock: suppress IntersectionObserver during click-scroll
+  let navTimer = null;
 
   function updateNavIndicator() {
     const indicator = document.getElementById('nav-indicator');
@@ -410,6 +412,33 @@
     }
   }
 
+  // Click handler: immediately jump indicator to target, lock out observer
+  function initNavPillClicks() {
+    const pills = document.querySelectorAll('.nav-pill-track .nav-pill');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function handleNavClick(e) {
+      const section = e.currentTarget.dataset.section;
+      if (!section) return;
+
+      // Immediately update indicator — no waiting for scroll
+      activeSection = section;
+      updateNavIndicator();
+
+      // Lock out IntersectionObserver during smooth scroll
+      isNavigating = true;
+      if (navTimer) clearTimeout(navTimer);
+      navTimer = setTimeout(() => { isNavigating = false; }, 1200);
+    }
+
+    pills.forEach(pill => pill.addEventListener('click', handleNavClick));
+    mobileLinks.forEach(link => link.addEventListener('click', handleNavClick));
+
+    // Also handle the logo click (data-section="hero")
+    const logo = document.querySelector('.nav-logo');
+    if (logo) logo.addEventListener('click', handleNavClick);
+  }
+
   function initNavActiveTracking() {
     const sections = [
       { id: 'hero', el: document.getElementById('hero-section') || document.querySelector('section') },
@@ -418,6 +447,9 @@
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Skip observer updates while a click-scroll is in progress
+        if (isNavigating) return;
+
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const id = entry.target.getAttribute('id') || 'hero';
@@ -711,6 +743,7 @@
     initI18n();
     initMobileMenu();
     initNavScroll();
+    initNavPillClicks();
     initNavActiveTracking();
     initScrollReveal();
     initHeroParticles();
