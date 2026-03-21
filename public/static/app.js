@@ -248,30 +248,20 @@
     const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
 
     if (animate) {
-      // Phase 1: slide-out with blur
-      els.forEach(el => {
-        el.classList.remove('i18n-in');
-        el.classList.add('i18n-out');
-      });
+      // Simple crossfade: fade out → swap → fade in
+      els.forEach(el => { el.style.opacity = '0'; });
 
-      // Phase 2: swap text + slide-in
       setTimeout(() => {
         els.forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (dict[key]) el.textContent = dict[key];
-          el.classList.remove('i18n-out');
-          el.classList.add('i18n-in');
+          el.style.opacity = '';
         });
         placeholders.forEach(el => {
           const key = el.getAttribute('data-i18n-placeholder');
           if (dict[key]) el.placeholder = dict[key];
         });
-      }, 250);
-
-      // Cleanup classes
-      setTimeout(() => {
-        els.forEach(el => el.classList.remove('i18n-in'));
-      }, 600);
+      }, 200);
     } else {
       els.forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -303,7 +293,7 @@
   }
 
   // ═══════════════════════════════════
-  // THEME TOGGLE — Smooth Morph Transition
+  // THEME TOGGLE — Clean CSS Transition
   // ═══════════════════════════════════
   function initTheme() {
     const toggle = document.getElementById('theme-toggle');
@@ -315,32 +305,10 @@
       document.documentElement.classList.add('dark');
     }
 
-    // Create theme flash overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'theme-transition-overlay';
-    document.body.appendChild(overlay);
-
-    let isAnimating = false;
-
     toggle.addEventListener('click', () => {
-      if (isAnimating) return;
-      isAnimating = true;
-
-      // Flash overlay — white/dark pulse
-      overlay.classList.add('flash');
-
-      // Toggle theme midway through the flash
-      setTimeout(() => {
-        document.documentElement.classList.toggle('dark');
-        const nowDark = document.documentElement.classList.contains('dark');
-        localStorage.setItem('micro-lab-theme', nowDark ? 'dark' : 'light');
-      }, 150);
-
-      // Fade out overlay
-      setTimeout(() => {
-        overlay.classList.remove('flash');
-        isAnimating = false;
-      }, 400);
+      document.documentElement.classList.toggle('dark');
+      const nowDark = document.documentElement.classList.contains('dark');
+      localStorage.setItem('micro-lab-theme', nowDark ? 'dark' : 'light');
     });
   }
 

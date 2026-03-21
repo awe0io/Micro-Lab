@@ -169,21 +169,13 @@ app.get('/', (c) => {
             <a href="#" class="nav-logo group flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-xl transition-all duration-300 hover:bg-white/[0.08] active:scale-[0.96]" data-section="hero">
               <div class="logo-icon relative w-7 h-7 rounded-[10px] bg-gradient-to-br from-[#007AFF] via-[#5856D6] to-[#AF52DE] flex items-center justify-center shadow-[0_2px_10px_rgba(88,86,214,0.45)] ring-1 ring-white/20 overflow-hidden">
                 <div class="logo-glow"></div>
-                {/* Inner glass reflection */}
                 <div class="absolute inset-0 bg-gradient-to-b from-white/25 via-transparent to-black/10 pointer-events-none rounded-[10px]"></div>
-                {/* Premium bolt with subtle glow */}
-                <svg class="w-[14px] h-[14px] text-white relative z-10" viewBox="0 0 24 24" fill="none">
-                  <defs>
-                    <linearGradient id="bolt-grad" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stop-color="#FFFFFF" />
-                      <stop offset="100%" stop-color="rgba(255,255,255,0.8)" />
-                    </linearGradient>
-                    <filter id="bolt-glow">
-                      <feGaussianBlur stdDeviation="1" result="blur" />
-                      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                    </filter>
-                  </defs>
-                  <path d="M13 2L3 14h8v8l10-12h-8V2z" fill="url(#bolt-grad)" filter="url(#bolt-glow)" />
+                {/* Atom / orbital lab icon */}
+                <svg class="w-[15px] h-[15px] relative z-10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round">
+                  <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-30 12 12)" opacity="0.9"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)" opacity="0.9"/>
+                  <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(90 12 12)" opacity="0.9"/>
+                  <circle cx="12" cy="12" r="2" fill="white" stroke="none"/>
                 </svg>
               </div>
               <span class="font-semibold text-[14px] tracking-tight text-gray-800 dark:text-gray-100 hidden sm:inline transition-colors">Micro Lab</span>
