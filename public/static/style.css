@@ -31,65 +31,32 @@ html {
 
 /* ═══════════ Nav Glass ═══════════ */
 .nav-glass {
-  transition: box-shadow 0.4s var(--ease-smooth), border-color 0.4s var(--ease-smooth), background-color 0.5s var(--ease-smooth);
+  transition: box-shadow 0.5s var(--ease-smooth), border-color 0.5s var(--ease-smooth), background-color 0.5s var(--ease-smooth);
 }
+/* Top light edge (mimics real glass refraction) */
 .nav-glass::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.1));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  top: 0; left: 12px; right: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7) 30%, rgba(255,255,255,0.7) 70%, transparent);
+  border-radius: 1px;
   pointer-events: none;
-  opacity: 0.6;
 }
 .dark .nav-glass::before {
-  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.01), rgba(255,255,255,0.05));
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent);
 }
 
-/* Nav pill hover glow */
-.nav-pill::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(0,122,255,0.08), rgba(175,82,222,0.08));
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-.nav-pill:hover::before { opacity: 1; }
-
-/* Nav active state when scrolled to section */
+/* Nav pill active: sliding indicator */
 .nav-pill.active {
   color: #111827;
-  background: rgba(255,255,255,0.9);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
 }
 .dark .nav-pill.active {
   color: #f3f4f6;
   background: rgba(255,255,255,0.1);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-/* Nav action buttons subtle inner glow */
-.nav-action-btn {
-  position: relative;
-}
-.nav-action-btn::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
-  pointer-events: none;
-}
-.dark .nav-action-btn::after {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
 }
 
 /* ═══════════ Hero Animations ═══════════ */

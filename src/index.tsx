@@ -13,46 +13,47 @@ app.get('/', (c) => {
     <>
       {/* ═══════════ NAV ═══════════ */}
       <nav class="fixed top-0 left-0 right-0 z-50">
-        <div class="mx-auto max-w-7xl px-4 pt-4">
-          <div class="nav-glass relative flex items-center justify-between h-14 px-5 rounded-2xl border border-gray-200/60 dark:border-white/[0.08] bg-white/60 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl backdrop-saturate-[1.8] shadow-[0_1px_3px_rgba(0,0,0,0.04),0_8px_24px_rgba(0,0,0,0.03)] dark:shadow-[0_1px_3px_rgba(0,0,0,0.2),0_8px_24px_rgba(0,0,0,0.15)]">
-            {/* Left: Logo */}
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-apple-blue to-apple-purple flex items-center justify-center shadow-md shadow-apple-blue/25">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="mx-auto max-w-5xl px-4 pt-3 sm:pt-4">
+          <div class="nav-glass relative flex items-center justify-between h-12 sm:h-[52px] px-2 sm:px-2.5 rounded-2xl bg-white/70 dark:bg-[#111]/70 backdrop-blur-2xl backdrop-saturate-[1.8] border border-white/60 dark:border-white/[0.06] shadow-[0_0_0_1px_rgba(0,0,0,0.03),0_2px_4px_rgba(0,0,0,0.02),0_12px_28px_rgba(0,0,0,0.04)] dark:shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_2px_4px_rgba(0,0,0,0.2),0_12px_28px_rgba(0,0,0,0.25)]">
+            {/* Left: Logo (clickable = home) */}
+            <a href="#" class="nav-pill flex items-center gap-2.5 pl-2 pr-3 py-1.5 rounded-xl transition-all duration-300 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:scale-[0.97]">
+              <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-apple-blue to-apple-purple flex items-center justify-center shadow-sm shadow-apple-blue/30 ring-1 ring-black/[0.04] dark:ring-white/[0.08]">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
               </div>
-              <span class="font-semibold text-lg tracking-tight">Micro Lab</span>
-              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-apple-blue/10 text-apple-blue dark:bg-apple-blue/20 border border-apple-blue/15 dark:border-apple-blue/20">v1.0</span>
-            </div>
+              <span class="font-semibold text-[15px] tracking-tight hidden sm:inline">Micro Lab</span>
+            </a>
 
-            {/* Center: Nav links (pill style) */}
+            {/* Center: Nav links */}
             <div class="hidden md:flex items-center">
-              <div class="flex items-center gap-0.5 p-1 rounded-xl bg-gray-100/70 dark:bg-white/[0.04] border border-gray-200/50 dark:border-white/[0.06]">
-                <a href="#buttons" class="nav-pill group relative px-4 py-1.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-white/[0.08] hover:shadow-sm">
-                  <span data-i18n="nav.buttons">按钮</span>
+              <div class="flex items-center gap-0.5 p-[3px] rounded-xl bg-black/[0.03] dark:bg-white/[0.03]">
+                <a href="#" class="nav-pill px-3.5 py-[5px] rounded-[9px] text-[13px] font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white" data-section="hero">
+                  <span data-i18n="nav.home">首页</span>
                 </a>
-                <a href="#cards" class="nav-pill group relative px-4 py-1.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-white/[0.08] hover:shadow-sm">
-                  <span data-i18n="nav.cards">卡片</span>
+                <a href="#buttons" class="nav-pill px-3.5 py-[5px] rounded-[9px] text-[13px] font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white" data-section="buttons">
+                  <span data-i18n="nav.buttons">交互按钮</span>
                 </a>
-                <a href="#inputs" class="nav-pill group relative px-4 py-1.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-white/[0.08] hover:shadow-sm">
-                  <span data-i18n="nav.inputs">输入</span>
+                <a href="#cards" class="nav-pill px-3.5 py-[5px] rounded-[9px] text-[13px] font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white" data-section="cards">
+                  <span data-i18n="nav.cards">视差卡片</span>
                 </a>
-                <a href="#loaders" class="nav-pill group relative px-4 py-1.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-white/[0.08] hover:shadow-sm">
-                  <span data-i18n="nav.loaders">加载</span>
+                <a href="#inputs" class="nav-pill px-3.5 py-[5px] rounded-[9px] text-[13px] font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white" data-section="inputs">
+                  <span data-i18n="nav.inputs">灵动输入</span>
+                </a>
+                <a href="#loaders" class="nav-pill px-3.5 py-[5px] rounded-[9px] text-[13px] font-medium text-gray-500 dark:text-gray-400 transition-all duration-300 hover:text-gray-900 dark:hover:text-white" data-section="loaders">
+                  <span data-i18n="nav.loaders">趣味等待</span>
                 </a>
               </div>
             </div>
 
             {/* Right: Actions */}
-            <div class="flex items-center gap-2">
-              {/* Language toggle */}
-              <button id="lang-toggle" class="nav-action-btn relative h-9 px-3 rounded-xl flex items-center gap-1.5 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-100/70 dark:bg-white/[0.04] border border-gray-200/50 dark:border-white/[0.06] transition-all duration-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200/70 dark:hover:bg-white/[0.08] hover:border-gray-300/60 dark:hover:border-white/[0.12] hover:shadow-sm active:scale-95" aria-label="Toggle language">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="flex items-center gap-1.5">
+              <button id="lang-toggle" class="nav-action-btn relative h-8 px-2.5 rounded-[9px] flex items-center gap-1.5 text-[11px] font-bold tracking-wide text-gray-400 dark:text-gray-500 transition-all duration-300 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:scale-95" aria-label="Toggle language">
+                <svg class="w-3.5 h-3.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span id="lang-label">EN</span>
               </button>
-              {/* Theme toggle */}
-              <button id="theme-toggle" class="nav-action-btn w-9 h-9 rounded-xl flex items-center justify-center bg-gray-100/70 dark:bg-white/[0.04] border border-gray-200/50 dark:border-white/[0.06] transition-all duration-300 hover:bg-gray-200/70 dark:hover:bg-white/[0.08] hover:border-gray-300/60 dark:hover:border-white/[0.12] hover:shadow-sm active:scale-90" aria-label="Toggle theme">
-                <svg id="sun-icon" class="w-4 h-4 hidden dark:block text-gray-400 hover:text-yellow-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-width="2"/></svg>
-                <svg id="moon-icon" class="w-4 h-4 block dark:hidden text-gray-500 hover:text-apple-indigo transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+              <div class="w-px h-4 bg-gray-200/60 dark:bg-white/[0.06]" />
+              <button id="theme-toggle" class="nav-action-btn w-8 h-8 rounded-[9px] flex items-center justify-center transition-all duration-300 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] active:scale-90" aria-label="Toggle theme">
+                <svg id="sun-icon" class="w-[15px] h-[15px] hidden dark:block text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-linecap="round" stroke-width="2"/></svg>
+                <svg id="moon-icon" class="w-[15px] h-[15px] block dark:hidden text-gray-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
               </button>
             </div>
           </div>

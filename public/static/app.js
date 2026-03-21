@@ -11,10 +11,11 @@
   // ═══════════════════════════════════
   const i18n = {
     zh: {
-      'nav.buttons': '按钮',
-      'nav.cards': '卡片',
-      'nav.inputs': '输入',
-      'nav.loaders': '加载',
+      'nav.home': '首页',
+      'nav.buttons': '交互按钮',
+      'nav.cards': '视差卡片',
+      'nav.inputs': '灵动输入',
+      'nav.loaders': '趣味等待',
       'hero.badge': '前端微交互实验室',
       'hero.desc': '探索动画边界 · 提升交互愉悦感',
       'hero.cta': '探索组件',
@@ -69,6 +70,7 @@
       'validation.invalid': '请输入有效的邮箱地址',
     },
     en: {
+      'nav.home': 'Home',
       'nav.buttons': 'Buttons',
       'nav.cards': 'Cards',
       'nav.inputs': 'Inputs',
@@ -231,29 +233,30 @@
   // NAV ACTIVE SECTION TRACKING
   // ═══════════════════════════════════
   function initNavActiveTracking() {
-    const sections = document.querySelectorAll('section[id]');
-    const pills = document.querySelectorAll('.nav-pill');
-    if (!sections.length || !pills.length) return;
+    const pills = document.querySelectorAll('.nav-pill[data-section]');
+    if (!pills.length) return;
+
+    // Default: activate "hero" pill
+    pills.forEach(p => { if (p.dataset.section === 'hero') p.classList.add('active'); });
+
+    const sections = [
+      { id: 'hero', el: document.querySelector('section') }, // first section = hero
+      ...Array.from(document.querySelectorAll('section[id]')).map(el => ({ id: el.id, el }))
+    ];
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            pills.forEach(pill => {
-              const href = pill.getAttribute('href');
-              if (href === '#' + id) {
-                pill.classList.add('active');
-              } else {
-                pill.classList.remove('active');
-              }
-            });
-          }
+          if (!entry.isIntersecting) return;
+          const id = entry.target.getAttribute('id') || 'hero';
+          pills.forEach(pill => {
+            pill.classList.toggle('active', pill.dataset.section === id);
+          });
         });
       },
-      { threshold: 0.2, rootMargin: '-100px 0px -50% 0px' }
+      { threshold: 0.15, rootMargin: '-80px 0px -40% 0px' }
     );
-    sections.forEach(s => observer.observe(s));
+    sections.forEach(s => { if (s.el) observer.observe(s.el); });
   }
 
   // ═══════════════════════════════════
