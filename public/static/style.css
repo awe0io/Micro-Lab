@@ -168,15 +168,15 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* ── Nav Logo — Glass Prism Icon ── */
+/* ── Nav Logo — Faceted Gem Icon ── */
 .logo-icon {
-  transition: transform 0.4s var(--ease-spring);
+  transition: transform 0.4s var(--ease-spring), filter 0.4s var(--ease-smooth);
   will-change: transform;
-  filter: drop-shadow(0 2px 6px rgba(99, 102, 241, 0.25));
+  filter: drop-shadow(0 2px 8px rgba(99, 102, 241, 0.3));
 }
 .nav-logo:hover .logo-icon {
-  transform: scale(1.12) rotate(-4deg);
-  filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.35));
+  transform: scale(1.1) rotate(-3deg);
+  filter: drop-shadow(0 4px 14px rgba(99, 102, 241, 0.4));
 }
 
 /* ── Mobile Menu ── */
@@ -593,8 +593,8 @@ html.theme-transitioning *::after {
   }
 
   /* Hero: better mobile typography */
-  .section-header h2 { font-size: 2rem; }
-  .section-header p { font-size: 0.875rem; }
+  .section-header h2 { font-size: 1.75rem; }
+  .section-header p { font-size: 0.7rem; max-width: 220px; }
 
   /* Sections: tighter vertical rhythm */
   section { padding-left: 1rem; padding-right: 1rem; }
@@ -667,7 +667,7 @@ html.theme-transitioning *::after {
 
 /* ── Medium screens: 641px–768px ── */
 @media (min-width: 641px) and (max-width: 768px) {
-  .section-header h2 { font-size: 2.5rem; }
+  .section-header h2 { font-size: 2rem; }
 }
 
 /* ── Safe area insets for notched phones ── */

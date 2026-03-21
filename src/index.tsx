@@ -168,44 +168,52 @@ app.get('/', (c) => {
             {/* Left: Logo */}
             <a href="#" class="nav-logo group flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-xl transition-all duration-300 hover:bg-white/[0.08] active:scale-[0.96]" data-section="hero">
               <div class="logo-icon relative w-7 h-7 flex items-center justify-center">
-                <svg viewBox="0 0 32 32" class="w-full h-full" aria-hidden="true">
+                <svg viewBox="0 0 36 36" class="w-full h-full" aria-hidden="true">
                   <defs>
-                    <linearGradient id="logo-bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                    <linearGradient id="lg1" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
                       <stop offset="0%" stop-color="#6366f1"/>
-                      <stop offset="50%" stop-color="#8b5cf6"/>
+                      <stop offset="40%" stop-color="#8b5cf6"/>
+                      <stop offset="70%" stop-color="#a855f7"/>
                       <stop offset="100%" stop-color="#d946ef"/>
                     </linearGradient>
-                    <linearGradient id="logo-shine" x1="0" y1="0" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                    <linearGradient id="lg2" x1="4" y1="2" x2="28" y2="20" gradientUnits="userSpaceOnUse">
                       <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
-                      <stop offset="50%" stop-color="white" stop-opacity="0.1"/>
                       <stop offset="100%" stop-color="white" stop-opacity="0"/>
                     </linearGradient>
-                    <linearGradient id="logo-inner" x1="10" y1="8" x2="22" y2="24" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stop-color="white" stop-opacity="0.95"/>
-                      <stop offset="100%" stop-color="white" stop-opacity="0.6"/>
+                    <linearGradient id="lg3" x1="10" y1="8" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
+                      <stop offset="50%" stop-color="white" stop-opacity="0.4"/>
+                      <stop offset="100%" stop-color="white" stop-opacity="0.1"/>
                     </linearGradient>
-                    <filter id="logo-glow">
-                      <feGaussianBlur stdDeviation="1.5" result="blur"/>
-                      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-                    </filter>
+                    <filter id="glo"><feGaussianBlur stdDeviation="0.6"/></filter>
+                    <filter id="glo2"><feGaussianBlur stdDeviation="1.5"/></filter>
                   </defs>
-                  {/* Base shape */}
-                  <rect width="32" height="32" rx="9" fill="url(#logo-bg)"/>
-                  {/* Glass shine layer */}
-                  <rect width="32" height="16" rx="9" fill="url(#logo-shine)"/>
-                  {/* Inner edge highlight */}
-                  <rect x="1" y="1" width="30" height="30" rx="8" fill="none" stroke="white" stroke-opacity="0.2"/>
-                  {/* Center symbol: stacked prism layers */}
-                  <g filter="url(#logo-glow)">
-                    <path d="M16 8 L22 14 L16 20 L10 14 Z" fill="url(#logo-inner)" opacity="0.9"/>
-                    <path d="M16 12 L20 16 L16 20 L12 16 Z" fill="white" opacity="0.4"/>
+                  {/* Base squircle */}
+                  <rect width="36" height="36" rx="10" fill="url(#lg1)"/>
+                  {/* Glass sweep highlight */}
+                  <path d="M4 10 Q4 4 10 4 L26 4 Q32 4 32 10 L32 18 Q18 22 4 18 Z" fill="url(#lg2)"/>
+                  {/* Inset border */}
+                  <rect x="1" y="1" width="34" height="34" rx="9.5" fill="none" stroke="white" stroke-opacity="0.18" stroke-width="0.6"/>
+                  {/* Inner glow behind motif */}
+                  <circle cx="18" cy="17" r="8" fill="white" opacity="0.06" filter="url(#glo2)"/>
+                  {/* Central faceted gem — layered triangles */}
+                  <g transform="translate(18,17)">
+                    <path d="M0,-8 L-7,3 L0,0 Z" fill="url(#lg3)" opacity="0.85"/>
+                    <path d="M0,-8 L7,3 L0,0 Z" fill="white" opacity="0.55"/>
+                    <path d="M-7,3 L0,0 L0,9 Z" fill="white" opacity="0.35"/>
+                    <path d="M7,3 L0,0 L0,9 Z" fill="white" opacity="0.2"/>
+                    <line x1="0" y1="-8" x2="0" y2="9" stroke="white" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="-7" y1="3" x2="7" y2="3" stroke="white" stroke-width="0.4" opacity="0.4"/>
                   </g>
-                  {/* Accent sparkle dots */}
-                  <circle cx="22" cy="10" r="1" fill="white" opacity="0.7">
-                    <animate attributeName="opacity" values="0.7;0.2;0.7" dur="2s" repeatCount="indefinite"/>
+                  {/* Refraction sparkles */}
+                  <circle cx="14" cy="12" r="0.8" fill="white" opacity="0.8">
+                    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
                   </circle>
-                  <circle cx="10" cy="22" r="0.7" fill="white" opacity="0.4">
-                    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>
+                  <circle cx="24" cy="14" r="0.6" fill="white" opacity="0.5">
+                    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="20" cy="10" r="0.5" fill="white" opacity="0.6">
+                    <animate attributeName="opacity" values="0.6;0.15;0.6" dur="2.5s" repeatCount="indefinite"/>
                   </circle>
                 </svg>
               </div>
@@ -364,8 +372,9 @@ app.get('/', (c) => {
                 <div class="h-px w-8 bg-gradient-to-r from-[#007AFF]/60 to-transparent" />
                 <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#007AFF]/80">Buttons</span>
               </div>
-              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="buttons.title">魔法按钮</h2>
-              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="buttons.desc">流光边框 · 物理按压 · 光影追随 — 每一次点击都是一次视觉享受</p>
+              <h2 class="text-2xl sm:text-3xl md:text-[2.5rem] font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="buttons.title">魔法按钮</h2>
+              <div class="w-8 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700 mb-3"></div>
+              <p class="text-xs text-gray-400/70 dark:text-gray-500/70 max-w-[260px] leading-relaxed" data-i18n="buttons.desc">流光边框 · 物理按压 · 光影追随 — 每一次点击都是一次视觉享受</p>
             </div>
           </div>
 
@@ -448,8 +457,9 @@ app.get('/', (c) => {
                 <div class="h-px w-8 bg-gradient-to-r from-[#AF52DE]/60 to-transparent" />
                 <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#AF52DE]/80">Cards</span>
               </div>
-              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="cards.title">丝滑卡片</h2>
-              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="cards.desc">3D 视差位移 · 光影追踪 · 深度感知 — 让平面设计拥有空间纵深感</p>
+              <h2 class="text-2xl sm:text-3xl md:text-[2.5rem] font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="cards.title">丝滑卡片</h2>
+              <div class="w-8 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700 mb-3"></div>
+              <p class="text-xs text-gray-400/70 dark:text-gray-500/70 max-w-[260px] leading-relaxed" data-i18n="cards.desc">3D 视差位移 · 光影追踪 · 深度感知 — 让平面设计拥有空间纵深感</p>
             </div>
           </div>
 
@@ -572,8 +582,9 @@ app.get('/', (c) => {
                 <div class="h-px w-8 bg-gradient-to-r from-[#34C759]/60 to-transparent" />
                 <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#34C759]/80">Inputs</span>
               </div>
-              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="inputs.title">输入反馈</h2>
-              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="inputs.desc">灵感来自 Linear / Vercel — 每一次输入都伴随着精准的视觉反馈</p>
+              <h2 class="text-2xl sm:text-3xl md:text-[2.5rem] font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="inputs.title">输入反馈</h2>
+              <div class="w-8 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700 mb-3"></div>
+              <p class="text-xs text-gray-400/70 dark:text-gray-500/70 max-w-[260px] leading-relaxed" data-i18n="inputs.desc">灵感来自 Linear / Vercel — 每一次输入都伴随着精准的视觉反馈</p>
             </div>
           </div>
 
@@ -646,8 +657,9 @@ app.get('/', (c) => {
                 <div class="h-px w-8 bg-gradient-to-r from-[#FF9500]/60 to-transparent" />
                 <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#FF9500]/80">Loaders</span>
               </div>
-              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="loaders.title">微加载动画</h2>
-              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="loaders.desc">不只是等待 · 更是视觉享受 — 让加载过程变成缓解焦虑的趣味动画</p>
+              <h2 class="text-2xl sm:text-3xl md:text-[2.5rem] font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="loaders.title">微加载动画</h2>
+              <div class="w-8 h-px bg-gradient-to-r from-gray-300 to-transparent dark:from-gray-700 mb-3"></div>
+              <p class="text-xs text-gray-400/70 dark:text-gray-500/70 max-w-[260px] leading-relaxed" data-i18n="loaders.desc">不只是等待 · 更是视觉享受 — 让加载过程变成缓解焦虑的趣味动画</p>
             </div>
           </div>
 
@@ -725,24 +737,35 @@ app.get('/', (c) => {
             {/* Logo */}
             <div class="flex items-center gap-3 mb-6">
               <div class="w-9 h-9 flex items-center justify-center">
-                <svg viewBox="0 0 32 32" class="w-full h-full" aria-hidden="true">
+                <svg viewBox="0 0 36 36" class="w-full h-full" aria-hidden="true">
                   <defs>
-                    <linearGradient id="flogo-bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                    <linearGradient id="flg1" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
                       <stop offset="0%" stop-color="#6366f1"/>
-                      <stop offset="50%" stop-color="#8b5cf6"/>
+                      <stop offset="40%" stop-color="#8b5cf6"/>
+                      <stop offset="70%" stop-color="#a855f7"/>
                       <stop offset="100%" stop-color="#d946ef"/>
                     </linearGradient>
-                    <linearGradient id="flogo-shine" x1="0" y1="0" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                    <linearGradient id="flg2" x1="4" y1="2" x2="28" y2="20" gradientUnits="userSpaceOnUse">
                       <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
-                      <stop offset="50%" stop-color="white" stop-opacity="0.1"/>
                       <stop offset="100%" stop-color="white" stop-opacity="0"/>
                     </linearGradient>
+                    <linearGradient id="flg3" x1="10" y1="8" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
+                      <stop offset="50%" stop-color="white" stop-opacity="0.4"/>
+                      <stop offset="100%" stop-color="white" stop-opacity="0.1"/>
+                    </linearGradient>
                   </defs>
-                  <rect width="32" height="32" rx="9" fill="url(#flogo-bg)"/>
-                  <rect width="32" height="16" rx="9" fill="url(#flogo-shine)"/>
-                  <rect x="1" y="1" width="30" height="30" rx="8" fill="none" stroke="white" stroke-opacity="0.2"/>
-                  <path d="M16 8 L22 14 L16 20 L10 14 Z" fill="white" opacity="0.9"/>
-                  <path d="M16 12 L20 16 L16 20 L12 16 Z" fill="white" opacity="0.35"/>
+                  <rect width="36" height="36" rx="10" fill="url(#flg1)"/>
+                  <path d="M4 10 Q4 4 10 4 L26 4 Q32 4 32 10 L32 18 Q18 22 4 18 Z" fill="url(#flg2)"/>
+                  <rect x="1" y="1" width="34" height="34" rx="9.5" fill="none" stroke="white" stroke-opacity="0.18" stroke-width="0.6"/>
+                  <g transform="translate(18,17)">
+                    <path d="M0,-8 L-7,3 L0,0 Z" fill="url(#flg3)" opacity="0.85"/>
+                    <path d="M0,-8 L7,3 L0,0 Z" fill="white" opacity="0.55"/>
+                    <path d="M-7,3 L0,0 L0,9 Z" fill="white" opacity="0.35"/>
+                    <path d="M7,3 L0,0 L0,9 Z" fill="white" opacity="0.2"/>
+                    <line x1="0" y1="-8" x2="0" y2="9" stroke="white" stroke-width="0.5" opacity="0.6"/>
+                    <line x1="-7" y1="3" x2="7" y2="3" stroke="white" stroke-width="0.4" opacity="0.4"/>
+                  </g>
                 </svg>
               </div>
               <span class="font-semibold text-lg">Micro Lab</span>
