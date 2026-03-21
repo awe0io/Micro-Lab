@@ -91,6 +91,29 @@ The project is fully **security-hardened** with 6 layers of defense-in-depth pro
 
 ---
 
+### Preview / 预览
+
+<table>
+<tr>
+<td align="center"><b>Dark Mode / 暗色模式</b></td>
+<td align="center"><b>Light Mode / 亮色模式</b></td>
+</tr>
+<tr>
+<td><img src=".github/screenshot-hero.png" alt="Dark Mode Hero" width="480" /></td>
+<td><img src=".github/screenshot-light.png" alt="Light Mode Hero" width="480" /></td>
+</tr>
+<tr>
+<td align="center"><b>Buttons / 魔法按钮</b></td>
+<td align="center"><b>Cards / 丝滑卡片</b></td>
+</tr>
+<tr>
+<td><img src=".github/screenshot-buttons.png" alt="Buttons Section" width="480" /></td>
+<td><img src=".github/screenshot-cards.png" alt="Cards Section" width="480" /></td>
+</tr>
+</table>
+
+---
+
 ### <img src="https://em-content.zobj.net/source/apple/391/sparkles_2728.png" width="22" /> Features
 
 #### 1. Magical Buttons
@@ -534,6 +557,29 @@ npm run cf-typegen   # Generate Cloudflare bindings types
 > - **边缘原生** — 专为 Cloudflare Workers/Pages 打造，冷启动 <50ms
 > - **中英双语** — 完整的中英文切换支持，带动画过渡效果
 > - **暗色模式** — 系统感知主题切换，500ms 平滑渐变过渡
+
+---
+
+### 预览
+
+<table>
+<tr>
+<td align="center"><b>暗色模式</b></td>
+<td align="center"><b>亮色模式</b></td>
+</tr>
+<tr>
+<td><img src=".github/screenshot-hero.png" alt="暗色模式首页" width="480" /></td>
+<td><img src=".github/screenshot-light.png" alt="亮色模式首页" width="480" /></td>
+</tr>
+<tr>
+<td align="center"><b>魔法按钮</b></td>
+<td align="center"><b>丝滑卡片</b></td>
+</tr>
+<tr>
+<td><img src=".github/screenshot-buttons.png" alt="按钮区域" width="480" /></td>
+<td><img src=".github/screenshot-cards.png" alt="卡片区域" width="480" /></td>
+</tr>
+</table>
 
 ---
 
