@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════
-   MICRO-INTERACTION LAB — Core Interaction Engine
+   MICRO-INTERACTION LAB v2.0 — Core Interaction Engine
    60fps · Apple-style Easing · i18n · Premium Feel
    ══════════════════════════════════════════════════ */
 
@@ -140,7 +140,6 @@
     const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
 
     if (animate) {
-      // Phase 1: fade out
       els.forEach(el => el.classList.add('i18n-switching'));
       setTimeout(() => {
         els.forEach(el => {
@@ -170,7 +169,6 @@
     const label = document.getElementById('lang-label');
     if (!btn) return;
 
-    // Apply stored language
     applyI18n(currentLang, false);
     label.textContent = currentLang === 'zh' ? 'EN' : '中';
 
@@ -179,6 +177,8 @@
       localStorage.setItem('micro-lab-lang', currentLang);
       label.textContent = currentLang === 'zh' ? 'EN' : '中';
       applyI18n(currentLang, true);
+      // Re-update nav indicator after text change
+      setTimeout(() => updateNavIndicator(), 200);
     });
   }
 
@@ -203,44 +203,108 @@
   }
 
   // ═══════════════════════════════════
-  // SCROLL REVEAL
+  // MOBILE MENU
   // ═══════════════════════════════════
-  function initScrollReveal() {
-    const targets = document.querySelectorAll(
-      '.section-header, .component-card, .tilt-card, .glow-card, .glass-card, .reveal-card, .stacked-card, .spotlight-card'
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const parent = entry.target.parentElement;
-            const siblings = parent ? Array.from(parent.children).filter(
-              el => el.matches('.component-card, .tilt-card, .glow-card, .glass-card, .reveal-card, .stacked-card, .spotlight-card')
-            ) : [];
-            const index = siblings.indexOf(entry.target);
-            const delay = index >= 0 ? index * 80 : 0;
-            setTimeout(() => entry.target.classList.add('visible'), delay);
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
-    );
-    targets.forEach(t => observer.observe(t));
+  function initMobileMenu() {
+    const toggle = document.getElementById('mobile-menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    const hamburger = toggle?.querySelector('.hamburger-icon');
+    if (!toggle || !menu) return;
+
+    let isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      menu.classList.remove('hidden', 'closing');
+      menu.classList.add('open');
+      hamburger?.classList.add('open');
+    }
+
+    function closeMenu() {
+      if (!isOpen) return;
+      isOpen = false;
+      menu.classList.add('closing');
+      hamburger?.classList.remove('open');
+      setTimeout(() => {
+        menu.classList.remove('open', 'closing');
+        menu.classList.add('hidden');
+      }, 200);
+    }
+
+    toggle.addEventListener('click', () => {
+      isOpen ? closeMenu() : openMenu();
+    });
+
+    // Close on link click
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => closeMenu());
+    });
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+      if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) {
+        closeMenu();
+      }
+    });
   }
 
   // ═══════════════════════════════════
-  // NAV ACTIVE SECTION TRACKING
+  // NAV SCROLL EFFECT
   // ═══════════════════════════════════
+  function initNavScroll() {
+    const glass = document.querySelector('.nav-glass');
+    if (!glass) return;
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          glass.classList.toggle('scrolled', window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // ═══════════════════════════════════
+  // NAV SLIDING INDICATOR
+  // ═══════════════════════════════════
+  let activeSection = 'hero';
+
+  function updateNavIndicator() {
+    const indicator = document.getElementById('nav-indicator');
+    const track = document.querySelector('.nav-pill-track');
+    const pills = document.querySelectorAll('.nav-pill-track .nav-pill');
+    if (!indicator || !track || !pills.length) return;
+
+    let activePill = null;
+    pills.forEach(pill => {
+      if (pill.dataset.section === activeSection) {
+        activePill = pill;
+        pill.classList.add('active');
+      } else {
+        pill.classList.remove('active');
+      }
+    });
+
+    // Also update mobile nav
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.classList.toggle('active', link.dataset.section === activeSection);
+    });
+
+    if (activePill) {
+      const trackRect = track.getBoundingClientRect();
+      const pillRect = activePill.getBoundingClientRect();
+      indicator.style.left = (pillRect.left - trackRect.left) + 'px';
+      indicator.style.width = pillRect.width + 'px';
+      indicator.style.opacity = '1';
+    }
+  }
+
   function initNavActiveTracking() {
-    const pills = document.querySelectorAll('.nav-pill[data-section]');
-    if (!pills.length) return;
-
-    // Default: activate "hero" pill
-    pills.forEach(p => { if (p.dataset.section === 'hero') p.classList.add('active'); });
-
     const sections = [
-      { id: 'hero', el: document.querySelector('section') }, // first section = hero
+      { id: 'hero', el: document.getElementById('hero-section') || document.querySelector('section') },
       ...Array.from(document.querySelectorAll('section[id]')).map(el => ({ id: el.id, el }))
     ];
 
@@ -249,14 +313,75 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const id = entry.target.getAttribute('id') || 'hero';
-          pills.forEach(pill => {
-            pill.classList.toggle('active', pill.dataset.section === id);
-          });
+          const mappedId = id === 'hero-section' ? 'hero' : id;
+          activeSection = mappedId;
+          updateNavIndicator();
         });
       },
       { threshold: 0.15, rootMargin: '-80px 0px -40% 0px' }
     );
     sections.forEach(s => { if (s.el) observer.observe(s.el); });
+
+    // Initial
+    setTimeout(updateNavIndicator, 100);
+
+    // Also update on resize
+    window.addEventListener('resize', () => {
+      requestAnimationFrame(updateNavIndicator);
+    });
+  }
+
+  // ═══════════════════════════════════
+  // SCROLL REVEAL
+  // ═══════════════════════════════════
+  function initScrollReveal() {
+    const targets = document.querySelectorAll(
+      '.section-header, .section-glow, .component-card, .tilt-card, .glow-card, .glass-card, .reveal-card, .stacked-card, .spotlight-card'
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const parent = entry.target.parentElement;
+            const cardTypes = '.component-card, .tilt-card, .glow-card, .glass-card, .reveal-card, .stacked-card, .spotlight-card';
+            const siblings = parent ? Array.from(parent.children).filter(el => el.matches(cardTypes)) : [];
+            const index = siblings.indexOf(entry.target);
+            const delay = index >= 0 ? index * 70 : 0;
+            setTimeout(() => entry.target.classList.add('visible'), delay);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+    );
+    targets.forEach(t => observer.observe(t));
+  }
+
+  // ═══════════════════════════════════
+  // HERO PARTICLES
+  // ═══════════════════════════════════
+  function initHeroParticles() {
+    const container = document.getElementById('hero-particles');
+    if (!container) return;
+
+    const colors = ['#007AFF', '#AF52DE', '#FF2D55', '#5AC8FA', '#34C759', '#FF9500'];
+    const count = 12;
+
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'hero-particle';
+      const size = 2 + Math.random() * 4;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.cssText = `
+        width: ${size}px; height: ${size}px;
+        background: ${color};
+        left: ${10 + Math.random() * 80}%;
+        top: ${20 + Math.random() * 60}%;
+        animation-delay: ${-Math.random() * 12}s;
+        animation-duration: ${8 + Math.random() * 8}s;
+      `;
+      container.appendChild(particle);
+    }
   }
 
   // ═══════════════════════════════════
@@ -425,7 +550,11 @@
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
         const id = link.getAttribute('href');
-        if (!id || id === '#') return;
+        if (!id || id === '#') {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
         const target = document.querySelector(id);
         if (target) {
           e.preventDefault();
@@ -441,8 +570,11 @@
   function boot() {
     initTheme();
     initI18n();
-    initScrollReveal();
+    initMobileMenu();
+    initNavScroll();
     initNavActiveTracking();
+    initScrollReveal();
+    initHeroParticles();
     initMagneticButtons();
     initRippleButtons();
     initMorphButtons();
@@ -451,6 +583,10 @@
     initSpotlightCards();
     initInputValidation();
     initSmoothNav();
+
+    // Page loaded transition
+    document.body.classList.remove('page-loading');
+    document.body.classList.add('page-loaded');
   }
 
   if (document.readyState === 'loading') {
