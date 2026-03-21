@@ -128,6 +128,14 @@ body {
   color: rgba(107, 114, 128, 0.8);
   white-space: nowrap;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.nav-pill span {
+  display: inline-block;
+  vertical-align: middle;
 }
 .dark .nav-pill {
   color: rgba(156, 163, 175, 0.7);
@@ -545,11 +553,19 @@ html.theme-transitioning *::after {
    i18n TRANSITION — Staggered Crossfade
    ══════════════════════════════════════ */
 [data-i18n] {
-  transition: opacity 0.25s ease, transform 0.25s var(--ease-out-expo);
+  display: inline-block;
+  transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-out-expo), filter 0.3s ease;
+  will-change: opacity, transform;
 }
 [data-i18n].i18n-fade-out {
   opacity: 0;
-  transform: translateY(3px);
+  transform: translateY(-6px) scale(0.97);
+  filter: blur(2px);
+}
+/* Prevent i18n display override on nav pills (keep flex alignment) */
+.nav-pill [data-i18n] {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* ══════════════════════════════════════

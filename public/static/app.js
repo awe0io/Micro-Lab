@@ -248,24 +248,35 @@
     const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
 
     if (animate) {
-      // Phase 1: staggered fade-out (wave effect)
-      els.forEach((el, i) => {
-        setTimeout(() => el.classList.add('i18n-fade-out'), i * 12);
+      // Phase 1: all elements fade out together (fast, clean)
+      els.forEach(el => {
+        el.classList.add('i18n-fade-out');
       });
 
-      // Phase 2: swap text + staggered fade-in
-      const totalOut = els.length * 12 + 150;
+      // Phase 2: after fade-out completes, swap text + fade in
       setTimeout(() => {
-        els.forEach((el, i) => {
+        // Swap all text content
+        els.forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (dict[key]) el.textContent = dict[key];
-          setTimeout(() => el.classList.remove('i18n-fade-out'), i * 12);
         });
         placeholders.forEach(el => {
           const key = el.getAttribute('data-i18n-placeholder');
           if (dict[key]) el.placeholder = dict[key];
         });
-      }, totalOut);
+
+        // Force layout recalc before removing class (ensures transition triggers)
+        void document.body.offsetHeight;
+
+        // Fade in all elements
+        requestAnimationFrame(() => {
+          els.forEach(el => {
+            el.classList.remove('i18n-fade-out');
+          });
+          // Update nav indicator after text size changes settle
+          setTimeout(() => updateNavIndicator(), 350);
+        });
+      }, 300); // match CSS transition duration
     } else {
       els.forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -291,8 +302,6 @@
       localStorage.setItem('micro-lab-lang', currentLang);
       label.textContent = currentLang === 'zh' ? 'EN' : '中';
       applyI18n(currentLang, true);
-      // Re-update nav indicator after text change
-      setTimeout(() => updateNavIndicator(), 500);
     });
   }
 
