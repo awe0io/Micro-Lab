@@ -167,9 +167,47 @@ app.get('/', (c) => {
 
             {/* Left: Logo */}
             <a href="#" class="nav-logo group flex items-center gap-2 pl-2 pr-2.5 py-1.5 rounded-xl transition-all duration-300 hover:bg-white/[0.08] active:scale-[0.96]" data-section="hero">
-              <div class="logo-icon relative w-7 h-7 rounded-[10px] flex items-center justify-center overflow-hidden">
-                <div class="logo-shape"></div>
-                <div class="logo-shape-ring"></div>
+              <div class="logo-icon relative w-7 h-7 flex items-center justify-center">
+                <svg viewBox="0 0 32 32" class="w-full h-full" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="logo-bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#6366f1"/>
+                      <stop offset="50%" stop-color="#8b5cf6"/>
+                      <stop offset="100%" stop-color="#d946ef"/>
+                    </linearGradient>
+                    <linearGradient id="logo-shine" x1="0" y1="0" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
+                      <stop offset="50%" stop-color="white" stop-opacity="0.1"/>
+                      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                    </linearGradient>
+                    <linearGradient id="logo-inner" x1="10" y1="8" x2="22" y2="24" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="white" stop-opacity="0.95"/>
+                      <stop offset="100%" stop-color="white" stop-opacity="0.6"/>
+                    </linearGradient>
+                    <filter id="logo-glow">
+                      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                    </filter>
+                  </defs>
+                  {/* Base shape */}
+                  <rect width="32" height="32" rx="9" fill="url(#logo-bg)"/>
+                  {/* Glass shine layer */}
+                  <rect width="32" height="16" rx="9" fill="url(#logo-shine)"/>
+                  {/* Inner edge highlight */}
+                  <rect x="1" y="1" width="30" height="30" rx="8" fill="none" stroke="white" stroke-opacity="0.2"/>
+                  {/* Center symbol: stacked prism layers */}
+                  <g filter="url(#logo-glow)">
+                    <path d="M16 8 L22 14 L16 20 L10 14 Z" fill="url(#logo-inner)" opacity="0.9"/>
+                    <path d="M16 12 L20 16 L16 20 L12 16 Z" fill="white" opacity="0.4"/>
+                  </g>
+                  {/* Accent sparkle dots */}
+                  <circle cx="22" cy="10" r="1" fill="white" opacity="0.7">
+                    <animate attributeName="opacity" values="0.7;0.2;0.7" dur="2s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="10" cy="22" r="0.7" fill="white" opacity="0.4">
+                    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>
+                  </circle>
+                </svg>
               </div>
               <span class="font-semibold text-[14px] tracking-tight text-gray-800 dark:text-gray-100 hidden sm:inline transition-colors">Micro Lab</span>
             </a>
@@ -686,8 +724,26 @@ app.get('/', (c) => {
           <div class="flex flex-col items-center text-center">
             {/* Logo */}
             <div class="flex items-center gap-3 mb-6">
-              <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#007AFF] via-[#5856D6] to-[#AF52DE] flex items-center justify-center shadow-[0_2px_8px_rgba(88,86,214,0.3)]">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <div class="w-9 h-9 flex items-center justify-center">
+                <svg viewBox="0 0 32 32" class="w-full h-full" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="flogo-bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#6366f1"/>
+                      <stop offset="50%" stop-color="#8b5cf6"/>
+                      <stop offset="100%" stop-color="#d946ef"/>
+                    </linearGradient>
+                    <linearGradient id="flogo-shine" x1="0" y1="0" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="white" stop-opacity="0.5"/>
+                      <stop offset="50%" stop-color="white" stop-opacity="0.1"/>
+                      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <rect width="32" height="32" rx="9" fill="url(#flogo-bg)"/>
+                  <rect width="32" height="16" rx="9" fill="url(#flogo-shine)"/>
+                  <rect x="1" y="1" width="30" height="30" rx="8" fill="none" stroke="white" stroke-opacity="0.2"/>
+                  <path d="M16 8 L22 14 L16 20 L10 14 Z" fill="white" opacity="0.9"/>
+                  <path d="M16 12 L20 16 L16 20 L12 16 Z" fill="white" opacity="0.35"/>
+                </svg>
               </div>
               <span class="font-semibold text-lg">Micro Lab</span>
             </div>

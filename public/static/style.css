@@ -168,52 +168,16 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* ── Nav Logo — Morphing Shape ── */
+/* ── Nav Logo — Glass Prism Icon ── */
 .logo-icon {
   transition: transform 0.4s var(--ease-spring);
   will-change: transform;
+  filter: drop-shadow(0 2px 6px rgba(99, 102, 241, 0.25));
 }
 .nav-logo:hover .logo-icon {
-  transform: scale(1.1);
+  transform: scale(1.12) rotate(-4deg);
+  filter: drop-shadow(0 4px 12px rgba(99, 102, 241, 0.35));
 }
-
-/* Core shape: morphing circle↔squircle with rotating gradient */
-.logo-shape {
-  position: absolute;
-  inset: 0;
-  background: conic-gradient(from var(--logo-angle, 0deg), #6366f1, #a855f7, #ec4899, #6366f1);
-  border-radius: 35%;
-  animation: logo-morph 6s var(--ease-smooth) infinite, logo-rotate 8s linear infinite;
-  will-change: transform, border-radius;
-}
-@keyframes logo-morph {
-  0%, 100% { border-radius: 35%; }
-  25% { border-radius: 50%; }
-  50% { border-radius: 28% 50% 28% 50%; }
-  75% { border-radius: 50%; }
-}
-@keyframes logo-rotate {
-  to { --logo-angle: 360deg; }
-}
-/* Fallback: rotate the gradient via transform since @property may not be supported */
-.logo-shape {
-  animation: logo-morph 6s var(--ease-smooth) infinite;
-  background: conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1);
-}
-
-/* Orbiting ring */
-.logo-shape-ring {
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  animation: logo-morph 6s var(--ease-smooth) infinite;
-  pointer-events: none;
-}
-
-/* Hover: speed up */
-.nav-logo:hover .logo-shape { animation-duration: 2s; }
-.nav-logo:hover .logo-shape-ring { animation-duration: 2s; }
 
 /* ── Mobile Menu ── */
 .mobile-menu {
