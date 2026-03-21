@@ -317,13 +317,18 @@ app.get('/', (c) => {
         {/* Section decoration */}
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#007AFF]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-12 sm:mb-16">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#007AFF] to-transparent" />
-              <span class="text-xs font-mono tracking-widest uppercase text-[#007AFF]">01 / Buttons</span>
+          <div class="section-header mb-12 sm:mb-16 relative">
+            {/* Background number for depth */}
+            <div class="absolute -top-4 -left-2 sm:-top-6 sm:-left-4 text-[6rem] sm:text-[8rem] font-black text-gray-900/[0.03] dark:text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">01</div>
+            <div class="relative">
+              <div class="flex items-center gap-2.5 mb-5">
+                <div class="w-1.5 h-1.5 rounded-full bg-[#007AFF] shadow-[0_0_8px_rgba(0,122,255,0.4)]" />
+                <div class="h-px w-8 bg-gradient-to-r from-[#007AFF]/60 to-transparent" />
+                <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#007AFF]/80">Buttons</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="buttons.title">魔法按钮</h2>
+              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="buttons.desc">流光边框 · 物理按压 · 光影追随 — 每一次点击都是一次视觉享受</p>
             </div>
-            <h2 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4" data-i18n="buttons.title">魔法按钮</h2>
-            <p class="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed" data-i18n="buttons.desc">流光边框 · 物理按压 · 光影追随 — 每一次点击都是一次视觉享受</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
@@ -397,13 +402,17 @@ app.get('/', (c) => {
       <section id="cards" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#AF52DE]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-12 sm:mb-16">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#AF52DE] to-transparent" />
-              <span class="text-xs font-mono tracking-widest uppercase text-[#AF52DE]">02 / Cards</span>
+          <div class="section-header mb-12 sm:mb-16 relative">
+            <div class="absolute -top-4 -left-2 sm:-top-6 sm:-left-4 text-[6rem] sm:text-[8rem] font-black text-gray-900/[0.03] dark:text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">02</div>
+            <div class="relative">
+              <div class="flex items-center gap-2.5 mb-5">
+                <div class="w-1.5 h-1.5 rounded-full bg-[#AF52DE] shadow-[0_0_8px_rgba(175,82,222,0.4)]" />
+                <div class="h-px w-8 bg-gradient-to-r from-[#AF52DE]/60 to-transparent" />
+                <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#AF52DE]/80">Cards</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="cards.title">丝滑卡片</h2>
+              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="cards.desc">3D 视差位移 · 光影追踪 · 深度感知 — 让平面设计拥有空间纵深感</p>
             </div>
-            <h2 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4" data-i18n="cards.title">丝滑卡片</h2>
-            <p class="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed" data-i18n="cards.desc">3D 视差位移 · 光影追踪 · 深度感知 — 让平面设计拥有空间纵深感</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
@@ -517,13 +526,17 @@ app.get('/', (c) => {
       <section id="inputs" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#34C759]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-12 sm:mb-16">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#34C759] to-transparent" />
-              <span class="text-xs font-mono tracking-widest uppercase text-[#34C759]">03 / Inputs</span>
+          <div class="section-header mb-12 sm:mb-16 relative">
+            <div class="absolute -top-4 -left-2 sm:-top-6 sm:-left-4 text-[6rem] sm:text-[8rem] font-black text-gray-900/[0.03] dark:text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">03</div>
+            <div class="relative">
+              <div class="flex items-center gap-2.5 mb-5">
+                <div class="w-1.5 h-1.5 rounded-full bg-[#34C759] shadow-[0_0_8px_rgba(52,199,89,0.4)]" />
+                <div class="h-px w-8 bg-gradient-to-r from-[#34C759]/60 to-transparent" />
+                <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#34C759]/80">Inputs</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="inputs.title">输入反馈</h2>
+              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="inputs.desc">灵感来自 Linear / Vercel — 每一次输入都伴随着精准的视觉反馈</p>
             </div>
-            <h2 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4" data-i18n="inputs.title">输入反馈</h2>
-            <p class="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed" data-i18n="inputs.desc">灵感来自 Linear / Vercel — 每一次输入都伴随着精准的视觉反馈</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-7 max-w-4xl">
@@ -587,13 +600,17 @@ app.get('/', (c) => {
       <section id="loaders" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
         <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#FF9500]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
-          <div class="section-header mb-12 sm:mb-16">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="h-px flex-1 max-w-[40px] bg-gradient-to-r from-[#FF9500] to-transparent" />
-              <span class="text-xs font-mono tracking-widest uppercase text-[#FF9500]">04 / Loaders</span>
+          <div class="section-header mb-12 sm:mb-16 relative">
+            <div class="absolute -top-4 -left-2 sm:-top-6 sm:-left-4 text-[6rem] sm:text-[8rem] font-black text-gray-900/[0.03] dark:text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">04</div>
+            <div class="relative">
+              <div class="flex items-center gap-2.5 mb-5">
+                <div class="w-1.5 h-1.5 rounded-full bg-[#FF9500] shadow-[0_0_8px_rgba(255,149,0,0.4)]" />
+                <div class="h-px w-8 bg-gradient-to-r from-[#FF9500]/60 to-transparent" />
+                <span class="text-[11px] font-mono tracking-[0.2em] uppercase text-[#FF9500]/80">Loaders</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-gray-800 to-gray-600 dark:from-white dark:via-gray-200 dark:to-gray-400" data-i18n="loaders.title">微加载动画</h2>
+              <p class="text-sm sm:text-base text-gray-400 dark:text-gray-500 max-w-lg leading-relaxed" data-i18n="loaders.desc">不只是等待 · 更是视觉享受 — 让加载过程变成缓解焦虑的趣味动画</p>
             </div>
-            <h2 class="text-4xl sm:text-5xl font-bold tracking-tight mb-4" data-i18n="loaders.title">微加载动画</h2>
-            <p class="text-base sm:text-lg text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed" data-i18n="loaders.desc">不只是等待 · 更是视觉享受 — 让加载过程变成缓解焦虑的趣味动画</p>
           </div>
 
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">

@@ -431,6 +431,15 @@ html.theme-transitioning *::after {
   transform: translateY(0);
 }
 
+/* Section header accent dot glow pulse */
+.section-header .rounded-full[class*="shadow-"] {
+  animation: dot-glow 2s ease-in-out infinite;
+}
+@keyframes dot-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
 /* ══════════════════════════════════════
    COMPONENT CARDS — Stagger Reveal (GPU)
    ══════════════════════════════════════ */
