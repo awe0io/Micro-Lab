@@ -359,9 +359,9 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: MAGICAL BUTTONS ═══════════ */}
-      <section id="buttons" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
+      <section id="buttons" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
         {/* Section decoration */}
-        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#007AFF]/30 to-transparent" />
+        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#007AFF]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
           <div class="section-header mb-12 sm:mb-16 relative">
             {/* Background number for depth */}
@@ -446,8 +446,8 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: SMOOTH CARDS ═══════════ */}
-      <section id="cards" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#AF52DE]/30 to-transparent" />
+      <section id="cards" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
+        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#AF52DE]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
           <div class="section-header mb-12 sm:mb-16 relative">
             <div class="absolute -top-4 -left-2 sm:-top-6 sm:-left-4 text-[6rem] sm:text-[8rem] font-black text-gray-900/[0.03] dark:text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">02</div>
@@ -571,8 +571,8 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: INPUT FEEDBACK ═══════════ */}
-      <section id="inputs" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#34C759]/30 to-transparent" />
+      <section id="inputs" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
+        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#34C759]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
           <div class="section-header mb-12 sm:mb-16 relative">
             <div class="absolute -top-4 -left-2 sm:-top-6 sm:-left-4 text-[6rem] sm:text-[8rem] font-black text-gray-900/[0.03] dark:text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">03</div>
@@ -646,8 +646,8 @@ app.get('/', (c) => {
       </section>
 
       {/* ═══════════ SECTION: MICRO LOADERS ═══════════ */}
-      <section id="loaders" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6">
-        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#FF9500]/30 to-transparent" />
+      <section id="loaders" class="relative py-14 sm:py-20 md:py-24 px-4 sm:px-6 overflow-hidden">
+        <div class="section-glow absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#FF9500]/30 to-transparent" />
         <div class="max-w-6xl mx-auto">
           <div class="section-header mb-12 sm:mb-16 relative">
             <div class="absolute -top-4 -left-2 sm:-top-6 sm:-left-4 text-[6rem] sm:text-[8rem] font-black text-gray-900/[0.03] dark:text-white/[0.03] leading-none select-none pointer-events-none" aria-hidden="true">04</div>
