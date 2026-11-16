@@ -1,0 +1,80 @@
+name: Claude-Cage iOS unsigned IPA
+
+on:
+  push:
+    branches: [claude-cage-ios-build]
+    paths:
+      - '.github/workflows/ios-unsigned.yml'
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'Claude-Cage branch, tag, or commit'
+        required: false
+        default: main
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build-ipa:
+    name: Build unsigned IPA for iPhone arm64
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - name: Check out Claude-Cage
+        uses: actions/checkout@v4
+        with:
+          repository: Lee-xeo/Claude-Cage
+          ref: ${{ inputs.source_ref || 'main' }}
+          path: source
+          persist-credentials: false
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Set up Go required by Claude-Cage
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: source/mobile/bindings/go.mod
+          cache: false
+
+      - name: Display build toolchain
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+          go version
+          node --version
+
+      - name: Compile unsigned iOS device app
+        working-directory: source
+        run: |
+          npm ci --prefix ui
+          bash mobile/build.sh ios
+
+      - name: Package app as unsigned IPA
+        working-directory: source
+        run: |
+          set -euo pipefail
+          APP='mobile/.build/ios/products/Debug-iphoneos/CageMobile.app'
+          test -d "$APP" && test -f "$APP/Info.plist" && test -f "$APP/CageMobile"
+          test ! -e "$APP/embedded.mobileprovision"
+          test ! -d "$APP/_CodeSignature"
+          STAGING="$RUNNER_TEMP/claude-cage-ipa"
+          mkdir -p "$STAGING/Payload" "$GITHUB_WORKSPACE/dist"
+          ditto "$APP" "$STAGING/Payload/CageMobile.app"
+          (cd "$STAGING" && zip -qry "$GITHUB_WORKSPACE/dist/Claude-Cage-iOS-unsigned.ipa" Payload)
+          unzip -t "$GITHUB_WORKSPACE/dist/Claude-Cage-iOS-unsigned.ipa" >/dev/null
+          (cd "$GITHUB_WORKSPACE/dist" && shasum -a 256 Claude-Cage-iOS-unsigned.ipa > SHA256SUMS)
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Claude-Cage-iOS-unsigned
+          path: |
+            dist/Claude-Cage-iOS-unsigned.ipa
+            dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 7
